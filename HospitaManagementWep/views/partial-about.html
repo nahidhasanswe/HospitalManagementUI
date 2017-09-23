@@ -1,0 +1,23 @@
+﻿
+<div class="jumbotron text-center">
+    <h1>The About Page</h1>
+    <p>This page demonstrates <span class="text-danger">multiple</span> and <span class="text-danger">named</span> views.</p>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+         <!-- COLUMN ONE NAMED VIEW -->
+        <div class="col-sm-4">
+            <div ui-view="columnOne"></div>
+        </div>
+
+        <!-- COLUMN TWO NAMED VIEW -->
+        <div class="col-sm-4">
+            <div ui-view="columnTwo"></div>
+        </div>
+        <div class="col-sm-4">
+            <div ng-include="hello.html"></div>
+        </div>
+    </div> 
+
+</div> 

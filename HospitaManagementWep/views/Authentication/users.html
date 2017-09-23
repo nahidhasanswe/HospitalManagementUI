@@ -1,0 +1,13 @@
+﻿
+<div ng-init="getName();">
+    <table ng-table="vm.con" class="table" show-filter="true">
+        <tr ng-repeat="user in users">
+            <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                {{user.fullName}}
+            </td>
+            <td title="'Email'" filter="{ age: 'text'}" sortable="'age'">
+                {{user.email}}
+            </td>
+        </tr>
+    </table>
+</div>
