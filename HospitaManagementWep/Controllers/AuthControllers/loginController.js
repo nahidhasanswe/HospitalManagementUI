@@ -20,7 +20,7 @@
             $scope.ViewLoginModal = function() {
                 $scope.forgotPass = { EmployeeId: '' };
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/View/Authentication/LoginModal.html',
+                    templateUrl: 'views/Authentication/LoginModal.html',
                     controller: 'loginController',
                     scope: $scope,
                     backdrop: 'static',
@@ -62,7 +62,7 @@
                         function(error) {
                             console.log(error);
                             swal('Error', error.error_description, 'error');
-                            console.log(error)
+                            console.log(error);
                             $scope.buttonText();
                         });
                 } else {
@@ -80,16 +80,13 @@
                             $window.location.reload();
                         },
                         function(error) {
-                            swal('Error', error.data.message, 'error');
+                            swal('Error', error.error_description, 'error');
                             $scope.buttonText();
-                        })
+                        });
                 } else {
                     $scope.buttonText();
                 }
             }
-
-
             
-            $scope.ViewLoginModal(); 
         }
     ]);

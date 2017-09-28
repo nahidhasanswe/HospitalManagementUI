@@ -9,14 +9,14 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
         .state('home',
             {
                 url: '/home',
-                templateUrl: 'views/partial-home.html',
+                templateUrl: '/views/partial-home.html',
                 controller: 'homeController',
-                authorize: true
+                authorize: false
             })
         .state('home.list',
             {
                 url: '/list',
-                templateUrl: 'views/partial-home-list.html',
+                templateUrl: '/views/partial-home-list.html',
                 controller: 'homeListController'
             })
         .state('home.paragraph',
@@ -27,14 +27,14 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
         .state('login',
             {
                 url: '/login',
-                templateUrl: 'views/Authentication/loginModal.html',
+                templateUrl: '/views/Authentication/SimplePage.html',
                 controller: 'loginController'
             })
         .state('about',
             {
                 url: '/about',
                 views: {
-                    '': { templateUrl: 'views/partial-about.html' },
+                    '': { templateUrl: '/views/partial-about.html' },
                     'columnOne@about': { template: 'Look I am column one' },
                     'columnTwo@about': {
                         templateUrl: 'views/table-data.html',
@@ -51,7 +51,7 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/users',
                 controller: 'userController',
-                templateUrl: 'views/Authentication/users.html'
+                templateUrl: '/views/Authentication/users.html'
         });
     $locationProvider.hashPrefix('');
 });
@@ -67,13 +67,13 @@ routerApp.config(function($httpProvider) {
  
 
 routerApp.run(function ($rootScope, $location, authService) {
-    function getPath(route) {
+    
+    function getPath(route) { 
         if (!!route && typeof (route.originalPath) === "string")
             return "'" + route.originalPath + "'";
         return "[unknown route, using otherwise]";
     }
-
-    $rootScope.$on("$routeChangeStart", function (evt, to, from) {
+    $rootScope.$on("$stateChangeStart", function (evt, to, from) {
         if (to.authorize === true) {
             to.resolve = to.resolve || {};
             if (!to.resolve.authorizationResolver) {
@@ -86,13 +86,13 @@ routerApp.run(function ($rootScope, $location, authService) {
 
     });
 
-    $rootScope.$on("$routeChangeError", function (evt, to, from, error) {
+    $rootScope.$on("$stateChangeError", function (evt, to, from, error) {
         $location.path("/login").search("returnTo", to.originalPath);
     });
 
     // NOT needed in authorization / logging purposes only
-    $rootScope.$on("$routeChangeSuccess", function (evt, to, from) {
-
+    $rootScope.$on("$stateChangeSuccess", function (evt, to, from) {
+         
     });
 });
 

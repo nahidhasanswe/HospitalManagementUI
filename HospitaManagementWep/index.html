@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="Content/loading-bar.css" rel="stylesheet" />
+    <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="assets/css/sweetalert.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -271,7 +274,7 @@
                                     <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
                                         {{ Name }} - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        <small>Member since Nov. 2015</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -295,7 +298,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <button ng-click="logout();" class="btn btn-default btn-flat">Sign out</button>
                                     </div>
                                 </li>
                             </ul>
@@ -335,7 +338,7 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
-                            <span>Accounting</span>
+                            <span>Word Management</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -401,26 +404,15 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Book OT</a></li>
+                            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Clean OT</a></li>
+                            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Update OT</a></li>
+                            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Open New OT</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-table"></i> <span>Expanse</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-calendar"></i> <span>Fixed Asset</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -476,50 +468,57 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
+                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Save Pathology Test</a></li>
+                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Pathology Test List</a></li>
+                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Set Test schedule</a></li>
+                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Payment Receive</a></li>
+                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Report Delevery</a></li>
+                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Purchase Ingradiant</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-share"></i> <span>Word Management</span>
+                            <i class="fa fa-calendar"></i> <span>Fixed Asset</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+                            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Purchase Asset</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Sale Asset</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Present Asset</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>Accounting</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu"> 
+                            <li><i class="text-capitalize text-danger text-center"><b>Creations</b></i></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Create Group</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Create Ledger</a></li>
+                            <li><i class="text-capitalize text-danger text-center"><b>Entries</b></i></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Journal Voucher</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Payment voucher</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Receive Voucher</a></li>
                             <li class="treeview">
                                 <a href="#">
-                                    <i class="fa fa-circle-o"></i> Level One
+                                    <i class="fa fa-circle-o"></i> View and Report
                                     <span class="pull-right-container">
                                         <i class="fa fa-angle-left pull-right"></i>
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                                    <li class="treeview">
-                                        <a href="#">
-                                            <i class="fa fa-circle-o"></i> Level Two
-                                            <span class="pull-right-container">
-                                                <i class="fa fa-angle-left pull-right"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="treeview-menu">
-                                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="#"><i class="fa fa-book"></i> Trial Balance</a></li>
+                                    <li><a href="#"><i class="fa fa-book"></i> Balance Sheet</a></li>
+                                    <li><a href="#"><i class="fa fa-book"></i> Ledger Book</a></li>
+                                    <li><a href="#"><i class="fa fa-book"></i> Income Statement</a></li>
+                                    <li><a href="#"><i class="fa fa-book"></i> Payment Received Voucher</a></li>
                                 </ul>
-                            </li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+                            </li> 
                         </ul>
                     </li>
                     <li class="treeview">
@@ -530,15 +529,29 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
+                            
+                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Add Employee</a></li>
+                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> XXXXXX</a></li>
                             <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
+                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-calendar"></i> <span>Account</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Log out</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Recover Password</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Create Account</a></li>
+                            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Delete Account</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign Roles</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Create Role</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Delete Role</a></li>
+                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign permission to Role</a></li>
                         </ul>
                     </li>
                     <li class="header">LABELS</li>
