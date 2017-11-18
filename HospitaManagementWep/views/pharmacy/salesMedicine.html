@@ -1,0 +1,155 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Sale Medicine</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <table class="table table-no-border">
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="customerName" class="control-label">Customer Name:</label>
+                                        <div angucomplete-alt id="customerName" placeholder="Enter Customer Id" pause="100"
+                                             selected-object="afterSelectedCustomer" local-data="PatientList" search-fields="patientNumber"
+                                             title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <label for="datepicker">Sales Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-init="today()" ng-model="salesMedicine.transactionDate" id="datepicker">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                   <form name="addMedicineForm" ng-submit="addMedicineDetails(medicineDetails,addMedicineForm.$valid)" novalidate>
+                                       <div class="row" style="width: 100%">
+                                           <div class="col-lg-3">
+                                               <div class="form-group">
+                                                   <label for="" class="text-bold">Medicine Name:</label>
+                                                   <div angucomplete-alt id="medicineFiled" placeholder="Enter Medicine name" pause="100"
+                                                        selected-object="afterSelectedMedicineforSales" local-data="medicines" search-fields="name"
+                                                        title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+                                                    </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-lg-3">
+                                               <div class="form-group">
+                                                   <label for="quantity">Quantity: </label>
+                                                   <input type="number" id="quantity" ng-model="medicineDetails.quantity" class="form-control" placeholder="Quantity" required min="1"/>
+                                               </div>
+                                           </div>
+                                           <div class="col-lg-3">
+                                               <div class="form-group">
+                                                   <label for="quantity">Price: </label>
+                                                   <input type="number" id="price" ng-model="medicineDetails.price" class="form-control" placeholder="Price.."  min="1" required/>
+                                               </div>
+                                           </div>
+                                           <div class="col-lg-3">
+                                               <div class="form-group">
+                                                   <label for="ac">Action</label><br />
+                                                   <button id="ac" class="btn btn-success btn-sm" type="submit"><span class="fa fa-plus"></span></button>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </form>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Medicine Name</th>
+                                                <th>Quantity</th>
+                                                <th>Rate</th>
+                                                <th>Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in salesMedicine.MedicineSales">
+                                                <td>{{ data.medicineName }}</td>
+                                                <td>{{ data.quantity }}</td>
+                                                <td>{{ data.price }}</td>
+                                                <td>{{ data.price * data.quantity }}</td>
+                                                <td><button class="btn btn-danger btn-sm" ng-click="removeMedicineDetails($index)"><span class="fa fa-trash"></span></button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="vat">VAT: </label>
+                                                        <input type="number" class="form-control" ng-model="vat" id="vat" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="discount">Discount: </label>
+                                                        <input type="number" class="form-control" ng-model="discount" id="discount" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">paid: </label>
+                                                        <input type="number" class="form-control" ng-model="paid" id="paid" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="total">Total: </label>
+                                                        <input type="number" class="form-control" ng-model="total" ng-value="getTotal()" id="total" readonly="readonly" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">Due: </label>
+                                                        <input type="number" class="form-control" ng-model="due" ng-value="getDue()" id="due" readonly="readonly" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <br />
+                                        <button type="submit" ng-click="saveSaleMedicine();" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel-footer"><strong>Accounting voucher</strong></div>
+            </div>
+        </div>
+    </div>
+</div> 

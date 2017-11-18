@@ -1,0 +1,68 @@
+﻿<div class="col-md-12" ng-init="initButton()">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="text-center text-capitalize text-bold text-default">Discharge Patient List</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="search" ng-submit="getPatientList(searchDate,search.$valid)" novalidate>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="fromDate">From Date: </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" class="form-control" ng-model="searchDate.fromDate" id="fromDate" placeholder="From Date" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="toDate">To Date: </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" class="form-control" ng-model="searchDate.toDate" id="toDate" placeholder="To Date" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="btn" style="color: white">Search Button</label>
+                            <button type="submit" id="btn" class="btn btn-primary btn-block" style="height:100%" ng-disabled="isProcessing"><i class="fa fa-search" aria-hidden="true"></i> {{createButton}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Patient Id</th>
+                        <th>Patient Name</th>
+                        <th>Father/Husband Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Admission Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="patient in patientList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{patient.patientNumber}}</td>
+                        <td>{{patient.patientName}}</td>
+                        <td>{{patient.patienFather}}</td>
+                        <td>{{patient.mobileNo}}</td>
+                        <td>{{patient.adress}}</td>
+                        <td>{{patient.admissionDate|date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

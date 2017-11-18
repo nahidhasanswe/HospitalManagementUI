@@ -1,0 +1,31 @@
+﻿<div class="col-md-12" ng-init="getMedicineStorage()">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="text-center text-capitalize text-bold text-default">Medicine List</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Generic Name</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="med in medicineStore">
+                        <td>{{$index + 1}}</td>
+                        <td>{{med.medicineType}}</td>
+                        <td>{{med.name}}</td>
+                        <td>{{med.genericName}}</td>
+                        <td>{{med.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

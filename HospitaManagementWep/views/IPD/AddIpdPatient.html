@@ -1,0 +1,220 @@
+<div class="row" ng-init="initialObject()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Indoor Patient Admission</h4>
+                    </div> 
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <form name="admitForm" ng-submit="admitIpdPatient(admission,admitForm.$valid)" novalidate>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <button type="button" ng-click="ExistPatient()" class="btn btn-info btn-block">{{ExistPatientText}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-lg-12" ng-if="isExist">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label for="patientId">Patient Id: </label>
+                                                <angucomplete id="patientId"
+                                                              placeholder="Search by patient Id"
+                                                              pause="400"
+                                                              selected-object="SelectedPatient(selectedItem)"
+                                                              url="{{serverBasePath}}/api/ipd/patient-data/patient/"
+                                                              datafield="results"
+                                                              minlength ="1"
+                                                              searchfields ="patientNumber"
+                                                              titlefield="patientNumber,name"
+                                                              descriptionfield="phone"
+                                                              inputclass="form-control form-control-small" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 text-center">
+                                            <h4>OR</h4>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label for="patientPhone">Patient Phone Number: </label>
+                                                <angucomplete id="patientId"
+                                                              placeholder="Search by patient phone number"
+                                                              pause="400"
+                                                              selected-object="SelectedPatient(selectedItem)"
+                                                              url="{{serverBasePath}}/api/ipd/patient-data/patient-phone/"
+                                                              datafield="results"
+                                                              minlength="1"
+                                                              searchfields="phone"
+                                                              titlefield="patientNumber,name"
+                                                              descriptionfield="phone"
+                                                              inputclass="form-control form-control-small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h4>Patient Personal Information</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="name">Patient Name: </label>
+                                        <input type="text" id="name" ng-model="admission.name" class="form-control" placeholder="Patient Name" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="fahusbandName">Father/Husband Name: </label>
+                                        <input type="text" id="fahusbandName" ng-model="admission.fatherName" class="form-control" placeholder="Father/Husband Name" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number: </label>
+                                        <input type="text" id="phone" ng-model="admission.Phone" class="form-control" placeholder="Phone Number" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="email">Email: </label>
+                                        <input type="text" id="email" ng-model="admission.Email" class="form-control" placeholder="Email"/>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-lg-12">
+                                    <h4>Patient Address</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="villege">Villege/House: </label>
+                                        <input type="text" id="villege" ng-model="admission.villOrHouseAddress" class="form-control" placeholder="Villege/House" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="post">Post Office: </label>
+                                        <input type="text" id="post" ng-model="admission.postOffice" class="form-control" placeholder="Post Office" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="name">Post Code: </label>
+                                        <input type="text" id="name" ng-model="admission.postCode" class="form-control" placeholder="Postal Code"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="ps">Police Station: </label>
+                                        <input type="text" id="ps" ng-model="admission.PoliceStation" class="form-control" placeholder="Police Station" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="district">District: </label>
+                                        <input type="text" id="district" ng-model="admission.District" class="form-control" placeholder="District" required/>
+                                    </div>
+                                </div>
+                                <br>
+                                <hr>
+                                <div class="col-lg-12">
+                                    <h4>Official Information</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="purpose">Purpose: </label>
+                                        <input type="text" id="purpose" ng-model="admission.Purpose" class="form-control" placeholder="Admission Purpose" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="purpose">Admit Date: </label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-model="admission.transactionDate" id="datepicker">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="reference">Reference By: </label>
+                                        <div angucomplete-alt id="reference" placeholder="Search by Doctor Name" pause="100"
+                                            selected-object="afterSelectedDoctor" local-data="doctorList" search-fields="name"
+                                            title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="agent">Agent Name: </label>
+                                        <div angucomplete-alt id="agent" placeholder="Search by Agent Name" pause="100"
+                                            selected-object="afterSelectedAgent" local-data="agentList" search-fields="name"
+                                            title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div style="display: none">This is not related with this page</div>
+                                </div>
+                                <hr>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="fee">Admission Fee: </label>
+                                        <input type="number" id="fee" ng-model="admission.AdmissionFee" min="0" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="contractFee">Contract Amount: </label>
+                                        <input type="number" id="contractFee" ng-model="admission.ContractAmount" min="0" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="vat">Vat: </label>
+                                        <input type="number" id="vat" ng-model="admission.Vat" min="0" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="discount">Discount: </label>
+                                        <input type="number" id="discount" ng-model="admission.discount" min="0" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="paid">Paid: </label>
+                                        <input type="number" id="paid" ng-model="admission.Paid" min="0" class="form-control" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="due">Due: </label>
+                                        <input type="number" id="due" ng-model="admission.due" ng-value="getDue()" min="0" class="form-control" readonly required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="total">Total: </label>
+                                        <input type="number" id="total" ng-model="admission.total" ng-value="getTotal()" min="0" class="form-control" readonly required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="pull-right">
+                                            <button type="submit" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

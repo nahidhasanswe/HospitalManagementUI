@@ -1,0 +1,61 @@
+﻿<div class="col-md-12">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-success">
+            <form name="purchasedForm" class="form-inline" ng-submit="getPurchasedMedicine(purchasedForm.$invalid)" novalidate>
+                <div class="form-group">
+                    <label for="fromDate"></label>
+                    <input type="date" id="fromDate" name="fromDate" class="form-control" ng-model="range.fromDate" required="required"/>
+                    <div ng-messages="purchasedForm.fromDate.$error" ng-if="purchasedForm.$submitted" class="text-danger">
+                        <div ng-message="required">From date is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fromDate"></label>
+                    <input type="date" id="toDate" name="toDate" class="form-control" ng-model="range.toDate" required="required" />
+                    <div ng-messages="purchasedForm.toDate.$error" ng-if="purchasedForm.$submitted" class="text-danger">
+                        <div ng-message="required">To date is required</div>
+                    </div>
+                </div>
+                <div class="form-group"> 
+                    <button type="reset" class="btn btn-warning"><i class="fa fa-cloud"></i> Reset</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="text-center text-capitalize text-bold text-default">Medicine List</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Medicine Name</th>
+                        <th>Purchased Date</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Purchased By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="med in medicineStore">
+                        <td>{{$index + 1}}</td>
+                        <td>{{med.medicineName}}</td>
+                        <td>{{med.purchasedDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{med.quantity}}</td>
+                        <td>{{med.price}}</td>
+                        <td>{{med.total}}</td>
+                        <td>{{med.purchasedBy}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

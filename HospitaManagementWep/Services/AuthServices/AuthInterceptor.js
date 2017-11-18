@@ -25,6 +25,9 @@ AuthApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
     authInterceptorServiceFactory.responseError = function (rejection) {
         if (rejection.status == 403) {
             $location.path('/home');
+        } else if (rejection.status == 401) {
+            localStorageService.remove('authorizationData');
+            $location.path('/login');
         }
         return $q.reject(rejection);
     };
@@ -52,6 +55,18 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
             throw new NotImplementedError('Unauthenticate');
     }
 
+    authServiceFactory.isAuthenticated = function () {
+
+        var authData = localStorageService.get('authorizationData');
+
+        if (authData) {
+            return true;
+        } else
+            return false;
+    }
+
+ 
+
     authServiceFactory.getRoleName = function () {
 
         var authData = localStorageService.get('authorizationData');
@@ -77,11 +92,12 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
 
     authServiceFactory.saveRegistration = function (registration) {
 
-        authServiceFactory.logOut();
+        //authServiceFactory.logOut();
 
         return $http.post(serviceBasePath + '/api/accounts/create', registration);
     };
 
+    
     authServiceFactory.login = function (loginData) {
 
         var obj = { 'username': loginData.userName, 'password': loginData.password, 'grant_type': 'password' };
@@ -136,7 +152,12 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
 
     authServiceFactory.changePassword = function (passwordData) {
 
-        return $http.post(serviceBasePath + '/api/Accounts/ChangePassword', passwordData)
+        return $http.post(serviceBasePath + '/api/Accounts/ChangePassword', passwordData);
+    };
+
+    authServiceFactory.recoverPassword = function (passwordData) {
+
+        return $http.post(serviceBasePath + '/api/Accounts/RecoveryPassword', passwordData);
     };
 
     authServiceFactory.getData = function () {

@@ -1,0 +1,31 @@
+<div class="col-md-12" ng-init="getPatientList()" >
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="text-center text-capitalize text-bold text-default">Indoor Patient List</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Patient Id</th>
+                        <th>Patient Name</th>
+                        <th>Father/Husband Name</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="patient in patientList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{patient.patientNumber}}</td>
+                        <td>{{patient.name}}</td>
+                        <td>{{patient.fatherName}}</td>
+                        <td>{{patient.phone}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

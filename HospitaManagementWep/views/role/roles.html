@@ -1,0 +1,36 @@
+﻿<div class="row" ng-init="getRoles()">
+    <div class="col-md-12">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">User roles</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Role Name</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="v in vas">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ v.name }}</td>
+                            <td><button class="btn btn-info" ng-click="editRole(v.id);"><span class="fa fa-edit"></span></button></td>
+                            <td><button class="btn btn-danger" ng-click="deleteRole(v.id);"><span class="fa fa-trash"></span></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer text-center text-active">
+                    <h5>Software administration Roles</h5>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

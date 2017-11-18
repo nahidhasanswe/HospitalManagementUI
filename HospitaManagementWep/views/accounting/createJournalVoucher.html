@@ -1,0 +1,116 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Journal voucher entry</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <label for="voucherNumber" class="control-label">Voucher Number:</label>
+                                        <input type="text" class="form-control" id="voucherNumber" ng-model="voucherNumber" readonly>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <label for="datepicker">Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" ng-model="transactionDate" id="datepicker">
+                                        </div> 
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="" class="text-bold">Ledger Name:</label>
+                                        <!-- <input id="parentGroupId" name="parentGroupId" type="text" ng-model="model.parentGroupId" placeholder="" class="form-control" required/>-->
+                                        <div angucomplete-alt id="parentGroupId" placeholder="Enter ledger name" pause="100"
+                                             selected-object="afterSelectedGroup" local-data="groups" search-fields="name"
+                                             title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <label for="dc">Debit/Credit</label><br/>
+                                    <button id="dc" class="btn btn-warning btn-sm" ng-click="changeBT();">{{ bt }}</button>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label><b>{{ bt }}:</b></label>
+                                        <input ng-show="bt == 'Debit'" type="text" name="amount" class="form-control" id="debit" ng-model="sub.debit">
+                                        <input ng-show="bt == 'Credit'" type="text" name="amount" class="form-control" id="credit" ng-model="sub.credit">
+                                    </div>
+                                </td>
+                                <td><label for="ac">Action</label><br />
+                                    <button id="ac" class="btn btn-success" ng-click="insert();"><span class="fa fa-plus">Add</span></button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Ledger</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in model.accVoucherDetail">
+                                                <td>{{ data.ledgerName }}</td>
+                                                <td>{{ data.Debit }}</td>
+                                                <td>{{ data.Credit }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>{{ sumDr }}</td>
+                                                <td>{{ sumCr }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <label for="voucherNumber">Narration:</label>
+                                        <input type="text" class="form-control" id="narration" name="narration" ng-model="narration">
+                                    </div> 
+                                </td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <br/>
+                                        <button type="submit" ng-click="createJournalVoucher();" class="btn btn-primary" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer"><strong>Accounting voucher</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+    });
+</script>

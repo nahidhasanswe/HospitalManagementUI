@@ -1,0 +1,150 @@
+﻿<div class="row" ng-init="initialObject()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Outdoor Patient Appointment</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <form name="admitForm" ng-submit="saveAppointment(appoinment,admitForm.$valid)" novalidate>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <button type="button" ng-click="ExistPatient()" class="btn btn-info btn-block">{{ExistPatientText}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-lg-12" ng-if="isExist">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label for="patientId">Patient Id: </label>
+                                                <angucomplete id="patientId"
+                                                              placeholder="Search by patient Id"
+                                                              pause="400"
+                                                              selected-object="SelectedPatient(selectedItem)"
+                                                              url="{{serverBasePath}}/api/ipd/patient-data/patient/"
+                                                              datafield="results"
+                                                              minlength="1"
+                                                              searchfields="patientNumber"
+                                                              titlefield="patientNumber,name"
+                                                              descriptionfield="phone"
+                                                              inputclass="form-control form-control-small" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 text-center">
+                                            <h4>OR</h4>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label for="patientPhone">Patient Phone Number: </label>
+                                                <angucomplete id="patientId"
+                                                              placeholder="Search by patient phone number"
+                                                              pause="400"
+                                                              selected-object="SelectedPatient(selectedItem)"
+                                                              url="{{serverBasePath}}/api/ipd/patient-data/patient-phone/"
+                                                              datafield="results"
+                                                              minlength="1"
+                                                              searchfields="phone"
+                                                              titlefield="patientNumber,name"
+                                                              descriptionfield="phone"
+                                                              inputclass="form-control form-control-small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h4>Patient Personal Information</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="name">Patient Name: </label>
+                                        <input type="text" id="name" ng-model="appoinment.PatientName" class="form-control" placeholder="Patient Name" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number: </label>
+                                        <input type="text" id="phone" ng-model="appoinment.Phone" class="form-control" placeholder="Phone Number" required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="sex">Sex: </label>
+                                        <select id="sex" ng-model="appoinment.Sex" class="form-control" required>
+                                            <option value="">Select Sex</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="age">Age: </label>
+                                        <input type="text" id="age" ng-model="appoinment.Age" class="form-control" placeholder="Patient Age. eg. 22 years" required/>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-lg-12">
+                                    <h4>Appointment Information</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="villege">Specialist Name</label>
+                                        <select id="villege" ng-model="appoinment.SpecialistName" ng-change="getSelectedDoctors()" class="form-control" required>
+                                            <option value="">Select Specialist Name</option>
+                                            <option ng-repeat="item in Specialists" value="{{item.id}}">{{item.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="post">Doctor Name: </label>
+                                        <select id="villege" ng-model="appoinment.DoctorId" class="form-control" required>
+                                            <option value="">Select Doctor Name</option>
+                                            <option ng-repeat="doctor in doctorList" value="{{doctor.id}}">{{doctor.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="purpose">Appointment Date: </label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-model="appoinment.AppointmentDate" id="datepicker">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="purpose">Appointment Time: </label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            </div>
+                                            <input type="text" class="form-control" ng-model="appoinment.AppointmentTime" id="purpose" placeholder="Eg. 2:30 PM" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-lg-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                                    </div>
+                                </div>  
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,86 @@
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-lg-4" ng-if="!isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Save Specialist Name</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="saveSpecialistName(specialist,formdata.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Specialist Name</label>
+                                    <input type="text" class="form-control" id="name" ng-model="specialist.name" placeholder="Name of Specialist" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" style="height:100%" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{createButton}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-lg-4" ng-if="isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Update Specialist Name</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="updateSpecialistName(updateSpecialist,formdata.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Specialist Name</label>
+                                    <input type="text" class="form-control" id="name" ng-model="updateSpecialist.name" placeholder="Name of Specialist" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{updateButton}}</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="button" id="btn" class="btn btn-danger btn-block" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Specialist List</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Specialist Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in specialistItems">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.name}}</td>
+                                <td><button id="ac" class="btn btn-info btn-sm" ng-click="UpdateSpecialist(item)" type="submit"><span class="fa fa-pencil-square-o"></span></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

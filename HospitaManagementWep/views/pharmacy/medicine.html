@@ -1,0 +1,109 @@
+﻿ <div class="col-md-12" ng-init="GetAllMedicine()">
+    <div class="col-md-4">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4 class="text-center text-capitalize text-bold text-success">Save/Update Medicine</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="medicineForm" ng-submit="saveMedicine(medicineForm.$invalid)" novalidate>
+                    <div class="form-group">
+                        <label for="name" class="text-bold">Company Name:</label>
+                        <input id="name" name="name" type="text" ng-model="medicine.name" placeholder="Enter medicine company Name" class="form-control" required="required" />
+                        <div ng-messages="medicineForm.name.$error" ng-if="medicineForm.$submitted" class="text-danger">
+                            <div ng-message="required">Company Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-init="getAllMedicineType()">
+                        <label for="medicineTypeId" class="text-bold">Medicine Type:</label>
+                        <select id="medicineTypeId" ng-model="medicine.medicineTypeId" class="form-control" required="required">
+                            <option ng-repeat="t in allMedicineType" value="{{ t.id }}">{{ t.name }}</option>
+                        </select>
+                        <div ng-messages="medicineForm.medicineTypeId.$error" ng-if="medicineForm.$submitted" class="text-danger">
+                            <div ng-message="required">Medicine type is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-init="getMedicineGroupWithNameAndId()">
+                        <label for="txtAutocomplete" class="text-bold">Generic Name:</label>
+                        <div angucomplete-alt id="txtAutocomplete" placeholder="Type madicine's generic name" pause="100"
+                             selected-object="afterSelectedGroup" local-data="medicineGroup" search-fields="name"
+                             title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+ 
+                        </div>
+                    </div>
+                    <div class="form-group" ng-init="getMedicineCompany()">
+                        <label for="txtAutocomplete" class="text-bold">Company Name:</label>
+                        <div angucomplete-alt id="txtAutocomplete1" placeholder="Type medicine company name" pause="100"
+                             selected-object="afterSelectedCompany" local-data="companyList" search-fields="name"
+                             title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="initialBalance" class="text-bold">Opening Balance:</label>
+                        <input id="initialBalance" name="initialBalance" type="text" ng-model="medicine.initialBalance" placeholder="Enter medicine company Name" class="form-control" required="required" />
+                        <div ng-messages="medicineForm.initialBalance.$error" ng-if="medicineForm.$submitted" class="text-danger">
+                            <div ng-message="required">Opening balance is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SalingPrice" class="text-bold">Selling Price:</label>
+                        <input id="SalingPrice" name="SalingPrice" type="text" ng-model="medicine.salingPrice" placeholder="Enter medicine company Name" class="form-control" required="required" />
+                        <div ng-messages="medicineForm.SalingPrice.$error" ng-if="medicineForm.$submitted" class="text-danger">
+                            <div ng-message="required">Saling Price is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="purchasePrice" class="text-bold">Purchase Price:</label>
+                        <input id="purchasePrice" name="purchasePrice" type="text" ng-model="medicine.purchasePrice" placeholder="Enter medicine company Name" class="form-control" required="required" />
+                        <div ng-messages="medicineForm.purchasePrice.$error" ng-if="medicineForm.$submitted" class="text-danger">
+                            <div ng-message="required">Purchase Price is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a ui-sref="home" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
+                        <button type="reset" class="btn btn-warning"><i class="fa fa-cloud"></i> Reset</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <strong>Hospital Management System</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4 class="text-center text-capitalize text-bold text-default">Medicine List</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Type</th>
+                            <th>Name</th>
+                            <th>Generic Name</th>
+                            <th>Company</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="med in medicineList">
+                            <td>{{$index + 1}}</td>
+                            <td>{{med.medicineType}}</td>
+                            <td>{{med.name}}</td>
+                            <td>{{med.groupName}}</td>
+                            <td>{{med.companyName}}</td> 
+                            <td><button class="btn btn-warning" ng-click="editMedicine(med);"><span class="fa fa-edit"></span></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 

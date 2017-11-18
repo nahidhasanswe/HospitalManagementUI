@@ -1,0 +1,67 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4 class="text-center text-capitalize text-bold text-default">User Registration</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form name="regForm" ng-submit="register(regForm.$invalid)" novalidate>
+                            <div class="form-group">
+                                <label for="firstName" class="text-bold">First name:</label>
+                                <input id="firstName" name="firstNames" type="text" ng-model="regData.firstName" placeholder="Enter Your First Name" class="form-control" required="required" />
+                                <div ng-messages="regForm.firstNames.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">First Name is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastNames" class="text-bold">Last Name:</label>
+                                <input id="lastNames" name="lastNames" type="text" ng-model="regData.lastName" placeholder="Enter Your Last Name" class="form-control" required="required" />
+                                <div ng-messages="regForm.lastNames.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">LastName is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="emails" class="text-bold">Email:</label>
+                                <input id="emails" name="emails" type="email" ng-model="regData.email" placeholder="Enter Your email" class="form-control" required="required" />
+                                <div ng-messages="regForm.emails.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Email is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="id" class="text-bold">Username:</label>
+                                <input id="id" name="username" type="text" ng-model="regData.userName" placeholder="Enter Your username" class="form-control" required="required" />
+                                <div ng-messages="regForm.username.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Username is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass" class="text-bold">Password:</label>
+                                <input id="pass" name="employeePassword" type="password" ng-model="regData.password" placeholder="Enter Your Password" class="form-control" required="required" />
+                                <div ng-messages="regForm.employeePassword.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Password is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm" class="text-bold">Confirm Password:</label>
+                                <input id="confirm" name="confirmPassword" type="password" ng-model="regData.confPassword" placeholder="Enter Confirm Password" match-password="newPassword" class="form-control" required/>
+                                <div ng-messages="regForm.confirmPassword.$error" ng-if="regForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Confirm Password is required</div>
+                                    <div ng-message="passwordMatch">Password is not macth</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a ui-sref="home" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
+                                <button type="submit" class="btn btn-primary" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{registerButton}}</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-capitalize text-center text-darkgray"><strong>User Registration</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+﻿<div class="row" ng-init="initial()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Pathology Requisition</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <table class="table table-no-border">
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="customerName" class="control-label">Customer Name:</label>
+                                        <angucomplete id="medicineName"
+                                                      placeholder="Search by patient ID"
+                                                      pause="400"
+                                                      selected-object="SelectedPatient(selectedItem)"
+                                                      url="{{serverBasePath}}/api/ipd/patient-data/admited-patient/"
+                                                      datafield="results"
+                                                      minlength="1"
+                                                      searchfields="patientNumber"
+                                                      titlefield="patientNumber,name"
+                                                      descriptionfield="phone"
+                                                      inputclass="form-control form-control-small" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="phone">Phone:</label>
+                                        <input type="text" class="form-control" ng-model="phone" id="phone" readonly>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="datepicker">Sales Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-init="today()" ng-model="pathologyRequisition.TransactionDate" id="datepicker">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <form name="addPathologyForm" ng-submit="addPathology(pathology,addPathologyForm.$valid)" novalidate>
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="medicineName" class="text-bold">Pathology Name:</label>
+                                                    <angucomplete id="medicineName"
+                                                                  placeholder="Search by pathology name"
+                                                                  pause="400"
+                                                                  selected-object="selectedPathology(selectedItem)"
+                                                                  url="{{serverBasePath}}/api/pathology/pathology-data/test-name-and-id/"
+                                                                  datafield="results"
+                                                                  minlength="1"
+                                                                  searchfields="name"
+                                                                  titlefield="name"
+                                                                  inputclass="form-control form-control-small" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="quantity">Quantity: </label>
+                                                    <input type="number" id="quantity" ng-model="pathology.quantity" class="form-control" placeholder="Quantity" required min="1" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="quantity">Price: </label>
+                                                    <input type="number" id="price" ng-model="pathology.price" class="form-control" placeholder="Price.." min="1" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="ac">Action</label><br />
+                                                    <button id="ac" class="btn btn-success btn-sm" type="submit"><span class="fa fa-plus"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Pathology Name</th>
+                                                <th>Quantity</th>
+                                                <th>Rate</th>
+                                                <th>Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in pathologyRequisition.DiagnosisTestSales">
+                                                <td>{{ data.Name }}</td>
+                                                <td>{{ data.quantity }}</td>
+                                                <td>{{ data.price }}</td>
+                                                <td>{{ data.price * data.quantity }}</td>
+                                                <td><button class="btn btn-danger btn-sm" ng-click="removePathology($index)"><span class="fa fa-trash"></span></button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="vat">VAT: </label>
+                                                        <input type="number" class="form-control" ng-model="pathologyRequisition.Vat" id="vat" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="discount">Discount: </label>
+                                                        <input type="number" class="form-control" ng-model="pathologyRequisition.Discount" id="discount" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">paid: </label>
+                                                        <input type="number" class="form-control" ng-model="pathologyRequisition.Paid" id="paid" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="total">Total: </label>
+                                                        <input type="number" class="form-control" ng-model="pathologyRequisition.Total" ng-value="getTotal()" id="total" readonly="readonly" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">Due: </label>
+                                                        <input type="number" class="form-control" ng-model="pathologyRequisition.Due" ng-value="getDue()" id="due" readonly="readonly" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <br />
+                                        <button type="submit" ng-click="addPathologyRequisition(pathologyRequisition);" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{submitButton}}</button>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--<div class="panel-footer"><strong>Accounting voucher</strong></div>-->
+            </div>
+        </div>
+    </div>
+</div> 

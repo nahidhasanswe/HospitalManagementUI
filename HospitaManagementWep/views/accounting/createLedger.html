@@ -1,0 +1,93 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Ledger Creation</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12"> 
+                        <form name="ledgerForm" ng-submit="createLedger(ledgerForm.$invalid)" novalidate>
+                            <div class="form-group">
+                                <label for="name" class="text-bold">Ledger Name</label>
+                                <input id="name" name="name" type="text" ng-model="model.name" placeholder="Enter ledger name" class="form-control" required />
+                                <div ng-messages="ledgerForm.name.$error" ng-if="ledgerForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Group name is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="text-bold">Select ledger type:</label>
+                                <select ng-model="model.balanceTypeId" name="balanceTypeId" id="balanceTypeId" class="form-control" required>
+                                    <option ng-repeat="n in balanceType" value="{{ n.id }}">{{ n.name }}</option>
+                                </select>
+                                <div ng-messages="ledgerForm.balanceTypeId.$error" ng-if="ledgerForm.$submitted" class="text-danger">
+                                    <div ng-message="required">balance Type is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="InitialBalance" class="text-bold">InitialBalance</label>
+                                <input id="InitialBalance" name="InitialBalance" type="text" ng-model="model.InitialBalance" placeholder="Enter InitialBalance" value="0" class="form-control" required />
+                                <div ng-messages="ledgerForm.InitialBalance.$error" ng-if="ledgerForm.$submitted" class="text-danger">
+                                    <div ng-message="required">Initial Balance name is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="text-bold">Ledger description:</label>
+                                <textarea id="description" name="description" type="text" ng-model="model.description" placeholder="Enter ledger description" class="form-control"> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="text-bold">Group Name:</label>
+                                <!-- <input id="parentGroupId" name="parentGroupId" type="text" ng-model="model.parentGroupId" placeholder="" class="form-control" required/>-->
+                                <div angucomplete-alt id="parentGroupId" placeholder="Enter group name" pause="100"
+                                     selected-object="afterSelectedGroup" local-data="groups" search-fields="name"
+                                     title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+
+                                </div> 
+                            </div>
+                            <div class="form-group">
+                                <a ui-sref="home" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
+                                <button type="submit" class="btn btn-primary" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                            </div>
+                        </form> 
+                    </div>
+
+                </div>
+                <div class="panel-footer"><h5 class="text-center text-capitalize text-bold text-cyan">Ledger Creation</h5></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Ledgers</h4>
+                    </div>
+                </div>
+                <div class="panel-body" ng-init="getLedgers()">
+                    <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                        <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Ledger Name</th> 
+                            <th>Description</th>
+                            <th>Group Name</th> 
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="led in ledgers">
+                            <td>{{$index + 1}}</td>
+                            <td>{{led.name}}</td> 
+                            <td>{{led.description}}</td>
+                            <td>{{led.groupName}}</td>
+                            <td><button class="btn btn-warning" ng-click="editLedger(led);"><span class="fa fa-edit"></span></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer"><strong>All ledgers</strong></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4 class="text-center text-capitalize text-bold text-default">Doctor Information</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Doctor Name</label>
+                            <input type="text" class="form-control" id="name" ng-model="doctorInfo.name" placeholder="Name of Doctor" disabled />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Degree's Name</label>
+                            <textarea type="text" rows="2" class="form-control" id="name" ng-model="doctorInfo.specificationOfdegree" placeholder="Degree separated by comma" disabled></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Specialist</label>
+                            <select class="form-control" id="name" ng-model="doctorInfo.specialistId" disabled>
+                                <option value="">Select Specialist Name</option>
+                                <option ng-repeat="item in specialistItems" value="{{item.id}}">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Email</label>
+                            <input type="text" class="form-control" id="name" ng-model="doctorInfo.email" placeholder="Doctor's Email'" disabled />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Phone</label>
+                            <input type="text" class="form-control" id="name" ng-model="doctorInfo.phone" placeholder="Mobile No" disabled />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Name of Hospital</label>
+                            <input type="text" class="form-control" id="name" ng-model="doctorInfo.hospitalName" placeholder="Name of Hospital" disabled />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="name">Visiting Fee</label>
+                            <input type="number" class="form-control" id="name" ng-model="doctorInfo.visitingFee" placeholder="Visiting Fee" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary btn-block" ng-click="$dismiss()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

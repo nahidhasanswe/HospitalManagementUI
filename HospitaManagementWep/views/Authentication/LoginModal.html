@@ -1,16 +1,16 @@
 ﻿<div tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div ng-if="loginView == 1">
-        <form name="loginData" ng-submit="Login(loginData.$invalid)" novalidate>
+        <form class="form-horizontal" name="loginData" ng-submit="Login(loginData.$invalid)" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Login your account</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="id" class="text-bold">Employee Id:</label>
-                                <input id="id" name="employeeId" type="text" ng-model="logindb.userName" placeholder="Enter Your Employee Id" class="form-control" required="required"/>
+                                <label for="employeeId" class="text-bold">Employee Id:</label>
+                                <input id="employeeId" name="employeeId" type="text" ng-model="logindb.userName" placeholder="Enter Your Employee Id" class="form-control" required="required"/>
                                 <div ng-messages="loginData.employeeId.$error" ng-if="loginData.$submitted" class="text-danger">
                                     <div ng-message="required">Employee Id is required</div>
                                 </div>
@@ -42,11 +42,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="id" class="text-bold">Employee Id:</label>
-                                <input id="id" name="EmployeeID" type="text" ng-model="forgotPass.EmployeeId" placeholder="Enter Your Employee Id" class="form-control" required/>
-                                <div ng-messages="forgotData.EmployeeID.$error" ng-if="forgotData.$submitted" class="text-danger">
+                                <label for="username" class="text-bold">Username:</label>
+                                <input id="username" name="username" type="text" ng-model="forgotPass.username" placeholder="Enter Your Employee Id" class="form-control" required/>
+                                <div ng-messages="forgotData.username.$error" ng-if="forgotData.$submitted" class="text-danger">
                                     <div ng-message="required">Employee Id is required</div>
                                 </div>
                             </div>

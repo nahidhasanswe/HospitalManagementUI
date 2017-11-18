@@ -1,13 +1,48 @@
-﻿
-<div ng-init="getName();">
-    <table ng-table="vm.con" class="table" show-filter="true">
-        <tr ng-repeat="user in users">
-            <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-                {{user.fullName}}
-            </td>
-            <td title="'Email'" filter="{ age: 'text'}" sortable="'age'">
-                {{user.email}}
-            </td>
-        </tr>
-    </table>
+﻿ <div class="row" ng-controller="userController">
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Software users</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th st-sort="firstName">First name</th>
+                            <th st-sort="lastName">Last name</th>
+                            <th st-sort="userName">User Name</th>
+                            <th st-sort="email">email</th>
+                            <th st-sort="id">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in displayedCollection">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{row.firstName}}</td>
+                            <td>{{row.lastName}}</td>
+                            <td>{{row.userName}}</td>
+                            <td>{{row.email}}</td>
+                            <td><button class="btn btn-success" ng-click="editUser(row.id);"><span class="fa fa-edit"></span></button></td>
+                            <td><button class="btn btn-danger" ng-click="deleteUser(row.id);"><span class="fa fa-trash-o"></span></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                    <div angucomplete-alt id="txtAutocomplete" placeholder="Type country name" pause="100"
+                         selected-object="afterSelectedUser" local-data="users" search-fields="name"
+                         title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+ 
+                    </div>
+                    <div ng-show="selecteduser">
+                        Selected Name : {{selecteduser.name}}
+                        Selected Id : {{ selecteduser.id }}
+                    </div>
+                <div class="panel-footer"><span class="text-center text-darkgray">Software users</span></div>
+            </div>
+        </div>
+    </div>
 </div>
