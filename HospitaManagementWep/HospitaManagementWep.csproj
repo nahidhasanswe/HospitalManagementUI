@@ -144,8 +144,10 @@
     <Content Include="Controllers\Administartor\administratorController.js" />
     <Content Include="Controllers\AuthControllers\roleController.js" />
     <Content Include="Controllers\AuthControllers\userController.js" />
+    <Content Include="Controllers\Expenses\ExpensesController.js" />
     <Content Include="Controllers\IPD\ipdController.js" />
     <Content Include="Controllers\OPD\opdController.js" />
+    <Content Include="Controllers\Pathology\PathologyController.js" />
     <Content Include="Controllers\pharmacyControllers\disctributorController.js" />
     <Content Include="Controllers\pharmacyControllers\medicineController.js" />
     <Content Include="Controllers\pharmacyControllers\posController.js" />
@@ -1343,8 +1345,10 @@
     <Content Include="Services\AuthServices\sweetalert.min.js" />
     <Content Include="Services\AuthServices\userRolesService.js" />
     <Content Include="Services\AuthServices\userService.js" />
+    <Content Include="Services\Expenses\ExpenseServices.js" />
     <Content Include="Services\IPD\ipdServices.js" />
     <Content Include="Services\OPD\opdService.js" />
+    <Content Include="Services\Pathology\PathologyServices.js" />
     <Content Include="Services\pharmacyServices\distributorService.js" />
     <Content Include="Services\pharmacyServices\medicineDataService.js" />
     <Content Include="Services\pharmacyServices\medicineService.js" />
@@ -1366,6 +1370,8 @@
     <Content Include="views\Authentication\ResetSimple.html" />
     <Content Include="views\Authentication\SimplePage.html" />
     <Content Include="views\Authentication\users.html" />
+    <Content Include="views\Expenses\AddExpenses.html" />
+    <Content Include="views\Expenses\ViewReportExpenses.html" />
     <Content Include="views\hello.html" />
     <Content Include="views\home\create.html" />
     <Content Include="views\IPD\AddIpdPatient.html" />
@@ -1379,6 +1385,8 @@
     <Content Include="views\OPD\opdPathologyTest.html" />
     <Content Include="views\OPD\opdReportDelivery.html" />
     <Content Include="views\OPD\PatientAppointment.html" />
+    <Content Include="views\Pathology\Add_List_Pathology.html" />
+    <Content Include="views\Pathology\PurchaseIngradiant.html" />
     <Content Include="views\pharmacy\medicineGroup.html" />
     <Content Include="views\pharmacy\company.html" />
     <Content Include="views\pharmacy\medicine.html" />

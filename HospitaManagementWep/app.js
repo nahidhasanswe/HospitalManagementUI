@@ -202,6 +202,34 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 templateUrl: './views/Administrator/AddSpecialistName.html'
             })
 
+        /* Pathology Management Routing */
+        .state('pathologyManagement',
+            {
+                url: '/pathology-list',
+                controller: 'pathologyController',
+                templateUrl: './views/Pathology/Add_List_Pathology.html'
+            })
+        .state('purchaseIngradiant',
+            {
+                url: '/purchase-ingradiant',
+                controller: 'purchaseIngradiantController',
+                templateUrl: './views/Pathology/PurchaseIngradiant.html'
+            })
+
+        /* Expenses Routing */
+        .state('addExpenses',
+            {
+                url: '/add-expenses',
+                controller: 'addExpensesController',
+                templateUrl: './views/Expenses/AddExpenses.html'
+            })
+        .state('viewExpenses',
+            {
+                url: '/view-expenses',
+                controller: 'viewExpensesController',
+                templateUrl: './views/Expenses/ViewReportExpenses.html'
+            })
+
         /* OPD Routing */
         .state('opdPatientAppointment',
             {

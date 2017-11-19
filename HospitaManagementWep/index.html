@@ -178,12 +178,12 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Save Pathology Test & List</a></li>
+                            <li><a ui-sref="pathologyManagement"><i class="fa fa-circle-o"></i> Save Pathology Test & List</a></li>
                             <!--<li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Pathology Test List</a></li>-->
                             <!--<li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Set Test schedule</a></li>
                             <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Payment Receive</a></li>
                             <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Report Delevery</a></li>-->
-                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Purchase Ingradiant</a></li>
+                            <li><a ui-sref="purchaseIngradiant"><i class="fa fa-circle-o"></i> Purchase Ingradiant</a></li>
                         </ul>
                     </li>
                     <!-- Pathology Management end-->
@@ -229,9 +229,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Save Expenses</a></li>
+                            <li><a ui-sref="addExpenses"><i class="fa fa-circle-o"></i> Save Expenses</a></li>
                             <!--<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Save Expenses from Excel</a></li>-->
-                            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> View Expenses</a></li>
+                            <li><a ui-sref="viewExpenses"><i class="fa fa-circle-o"></i> View Expenses</a></li>
                         </ul>
                     </li>
                     <!-- Expanse end-->
@@ -673,6 +673,15 @@
     <!--Administrator Management-->
     <script src="Controllers/Administartor/administratorController.js"></script>
     <script src="Services/Administrator/AdministratorServices.js"></script>
+
+    <!--Pathology Management-->
+    <script src="Controllers/Pathology/PathologyController.js"></script>
+    <script src="Services/Pathology/PathologyServices.js"></script>
+
+    <!--Expenses Management-->
+    <script src="Controllers/Expenses/ExpensesController.js"></script>
+    <script src="Services/Expenses/ExpenseServices.js"></script>
+
 
     <script src="Scripts/loading-bar.js"></script>
     <script src="Services/AuthServices/sweetalert.min.js"></script>
