@@ -1,4 +1,4 @@
-﻿routerApp.controller('homeController', function ($scope, $uibModal, authService, $location, rolesFactory) {
+﻿routerApp.controller('homeController', function ($scope, $uibModal, authService, $location, rolesFactory, $state) {
 
     $scope.initialize = function () {
         $scope.changeButton = 'Recover Password';
@@ -6,9 +6,11 @@
     }
 
     $scope.getAuthorization = function () {
-        var auth = authService.getRoleName();
-        $scope.Role = auth.Role;
-        $scope.Name = auth.Name; 
+        if (authService.getAuthInfo())
+            return true;
+        else {
+            return false;
+        }
     }
 
     $scope.logout = function() {

@@ -1,1 +1,97 @@
-﻿
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Search Appointment List</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <div class="row">
+                            <form name="formValue" ng-submit="getAppointmentList(searchAppointment, formValue.$valid)" novalidate>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="reference">Doctor Name: </label>
+                                        <div angucomplete-alt id="reference" placeholder="Search by Doctor Name" pause="100"
+                                             selected-object="afterSelectedDoctor" local-data="doctorList" search-fields="name"
+                                             title-field="name" minlength="1" input-class="form-control" match-class="highlight">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="datepicker">Appointment Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-model="searchAppointment.AppointmentDate" id="datepicker" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="ac" style="color: white">Action</label><br />
+                                        <button class="btn btn-success btn-sm" type="submit" ng-disabled="isProcessing"><span class="fa fa-search"></span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="isResult">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Appointment List</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>SL</th>
+                                            <th>Patient Id</th>
+                                            <th>Patient Name</th>
+                                            <th>Age</th>
+                                            <th>Sex</th>
+                                            <th>Appointment Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="patient in appointmentList">
+                                            <td>{{ $index + 1}}</td>
+                                            <td>{{ patient.patientID }}</td>
+                                            <td>{{ patient.patientName }}</td>
+                                            <td>{{ patient.age }}</td>
+                                            <td>{{ patient.sex }}</td>
+                                            <td>{{ patient.appointmentTime }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="isProcessing">
+    <div class="text-center">
+        <img style="width:100px; height: 100px" src="dist/img/spinner.gif" />
+    </div>
+</div>

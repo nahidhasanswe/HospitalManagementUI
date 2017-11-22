@@ -10,7 +10,6 @@
     }
 
     opd.getSpecialistDoctor = function (id) {
-        console.log(id);
         return $http.get(serviceBasePath + '/api/opd/doctor-data/doctor-name-id/' + id);
     }
 
@@ -22,7 +21,9 @@
         return $http.post(serviceBasePath + '/api/ipd/ipd-pos/diagnosis-test-sale', data);
     }
 
-        
+    opd.getAppointmentList = function (data) {
+        return $http.post(serviceBasePath + '/api/opd/doctor-data/view-doctor-appointment', data);
+    }
 
     
 

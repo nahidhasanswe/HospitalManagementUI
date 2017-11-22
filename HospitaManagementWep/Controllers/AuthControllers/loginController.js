@@ -27,7 +27,7 @@
             scope: $scope,
             backdrop: 'static',
             backdropClass: 'ModalBackdrop',
-            size: 'lg',
+            size: 'md',
         });
     }
 
@@ -54,8 +54,8 @@
 
                 if (returnUrl != null) {
                     $window.location.reload();
-                    $location.path(returnUrl && returnUrl || "/");
                     $location.search({});
+                    $location.path(returnUrl && returnUrl || "/");
                 } else {
                     $window.location.reload();
                     $state.go('home');

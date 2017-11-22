@@ -50,9 +50,10 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
         var authData = localStorageService.get('authorizationData');
         
         if (authData) {
-             return true;
+            return true;
         } else
-            throw new NotImplementedError('Unauthenticate');
+            //throw new NotImplementedError('Unauthenticate');
+            return false;
     }
 
     authServiceFactory.isAuthenticated = function () {

@@ -1,4 +1,4 @@
-﻿routerApp.controller('opdPatientAppointmentController', function ($scope, $location, opdService, toastr, serviceBasePath,$state) {
+﻿routerApp.controller('opdPatientAppointmentController', function ($scope, $location, opdService, toastr, serviceBasePath, $state) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -26,13 +26,17 @@
         })
     }
 
-    $scope.getSelectedDoctors = function () {
+    $scope.getSelectedDoctors = function (data) {
         var id = $scope.appoinment.SpecialistName;
-        opdService.getSpecialistDoctor(id).then(function (result) {
-            $scope.doctorList = result.data;
-        }, function (error) {
-            toastr.error('Internal Server Problem');
-        })
+        if (id != undefined) {
+            opdService.getSpecialistDoctor(id).then(function (result) {
+                $scope.doctorList = result.data;
+            }, function (error) {
+                toastr.error('Internal Server Problem');
+            })
+        } else {
+            $scope.doctorList = [];
+        }
 
     }
 
@@ -245,7 +249,7 @@ routerApp.controller('opdPathologyController', function ($scope, $location, opdS
     }
 });
 
-routerApp.controller('opdTestReportDeliveryController', function ($scope, $location, opdService, toastr, serviceBasePath) {
+routerApp.controller('opdTestReportDeliveryController', function ($scope, $location, opdService, toastr, serviceBasePath, reportService) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -374,9 +378,14 @@ routerApp.controller('opdTestReportDeliveryController', function ($scope, $locat
             toastr.info('Please provide all required information');
         }
     }
+
+
+    $scope.reportView = function () {
+        reportService.viewReport(12);
+    }
 });
 
-routerApp.controller('opdAppointmentController', function ($scope, $location, opdService, toastr, serviceBasePath) {
+routerApp.controller('opdAppointmentController', function ($scope, $location, opdService, ipdService, toastr, serviceBasePath) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -385,16 +394,16 @@ routerApp.controller('opdAppointmentController', function ($scope, $location, op
         $scope.isProcessing = false;
     }
 
-    $scope.ExistPatientText = 'Exist Patient';
-    $scope.isExist = false;
+    $scope.isResult = false;
 
-    $scope.ExistPatient = function () {
-        $scope.isExist = !$scope.isExist;
-        if ($scope.isExist)
-            $scope.ExistPatientText = 'Hide';
-        else
-            $scope.ExistPatientText = 'Exist Patient';
+    $scope.initialValue = function() {
+        $scope.searchAppointment = {
+            AppointmentDate : new Date(),
+            DoctorId : ''
+        };
     }
+
+    $scope.initialValue();
 
     function getDoctorList() {
         ipdService.getDoctorsListForReference().then(function (response) {
@@ -404,99 +413,21 @@ routerApp.controller('opdAppointmentController', function ($scope, $location, op
         })
     }
 
-    function getAgentList() {
-        ipdService.getAgentListForReference().then(function (response) {
-            $scope.agentList = response.data;
-        }, function (error) {
-            toastr.error('Internal Server Problem');
-        })
-    }
-
-    $scope.SelectedPatient = function (selected) {
-        if (selected) {
-            var selectedObject = selected.originalObject;
-            $scope.admission = {
-                id: selectedObject.id,
-                name: selectedObject.name,
-                fatherName: selectedObject.fatherName,
-                villOrHouseAddress: selectedObject.villOrHouseAddress,
-                postOffice: selectedObject.postOffice,
-                postCode: selectedObject.postCode,
-                PoliceStation: selectedObject.policeStation,
-                District: selectedObject.district,
-                Phone: selectedObject.phone,
-                AdmissionFee: 0,
-                ReferencedBy: '',
-                Agent: '',
-                ContractAmount: 0,
-                transactionDate: new Date(),
-                Purpose: '',
-                Paid: 0,
-                Vat: 0,
-                total: 0,
-                due: 0,
-                discount: 0
-            }
-        }
-    }
-
-    $scope.initButton();
-
-    $scope.initialObject = function () {
-        $scope.admission = {
-            id: '',
-            name: '',
-            fatherName: '',
-            villOrHouseAddress: '',
-            postOffice: '',
-            postCode: '',
-            PoliceStation: '',
-            District: '',
-            Phone: '',
-            Email: '',
-            AdmissionFee: 0,
-            ReferencedBy: '',
-            Agent: '',
-            ContractAmount: 0,
-            transactionDate: new Date(),
-            Purpose: '',
-            Paid: 0,
-            Vat: 0,
-            total: 0,
-            due: 0,
-            discount: 0
-        }
-
-        getDoctorList();
-        getAgentList();
-    }
-
-    $scope.getTotal = function () {
-        return $scope.admission.AdmissionFee + $scope.admission.ContractAmount + $scope.admission.Vat - $scope.admission.discount;
-    }
-
-    $scope.getDue = function () {
-        return $scope.getTotal() - $scope.admission.Paid;
-    }
+    getDoctorList();
 
     $scope.afterSelectedDoctor = function (selected) {
-        $scope.admission.ReferencedBy = selected.originalObject.id;
+        $scope.searchAppointment.DoctorId = selected.originalObject.id;
     }
 
-    $scope.afterSelectedAgent = function (selected) {
-        $scope.admission.Agent = selected.originalObject.id;
-    }
+    $scope.pdfSrc = "http://localhost:49866/test.pdf";
 
-    $scope.admitIpdPatient = function (data, valid) {
+    $scope.getAppointmentList = function (data, valid) {
         if (valid) {
-            $scope.createButton = 'submitting ....';
             $scope.isProcessing = true;
-            data.total = $scope.getTotal();
-            data.due = $scope.getDue();
-            ipdService.admitPatient(data).then(function (response) {
-                swal('Successful', response.data, 'success');
+            opdService.getAppointmentList(data).then(function (response) {
                 $scope.initButton();
-                $scope.initialObject();
+                $scope.appointmentList = response.data;
+                $scope.isResult = true;
             }, function (error) {
                 $scope.initButton();
                 toastr.error(error.data);

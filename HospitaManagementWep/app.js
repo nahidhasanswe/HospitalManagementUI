@@ -1,4 +1,4 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'smart-table', 'AuthApp', 'ui.bootstrap', 'ui.bootstrap.modal', 'ngMessages', 'chieffancypants.loadingBar', 'ngAnimate', 'ngTouch', 'angucomplete-alt', 'toastr', 'datatables','angucomplete']);
+﻿var routerApp = angular.module('routerApp', ['ui.router', 'smart-table', 'AuthApp', 'ui.bootstrap', 'ui.bootstrap.modal', 'ngMessages', 'chieffancypants.loadingBar', 'ngAnimate', 'ngTouch', 'angucomplete-alt', 'toastr', 'datatables', 'angucomplete']);
 
 routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -11,7 +11,7 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 url: '/home',
                 templateUrl: '/views/partial-home.html',
                 controller: 'homeController',
-                authorize: false
+                resolve: { authenticate: authenticate }
             })
         .state('home.list',
             {
@@ -53,7 +53,8 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/change-password',
                 templateUrl: '/views/Authentication/changeSimple.html',
-                controller: 'homeController'
+                controller: 'homeController',
+                resolve: { authenticate: authenticate }
             })
         .state('recoverPassword',
             {
@@ -65,19 +66,22 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/user-roles',
                 templateUrl: '/views/role/roles.html',
-                controller: 'roleController'
+                controller: 'roleController',
+                resolve: { authenticate: authenticate }
             })
         .state('createRole',
             {
                 url: '/create-role',
                 templateUrl: '/views/role/createRole.html',
-                controller: 'roleController'
+                controller: 'roleController',
+                resolve: { authenticate: authenticate }
             })
         .state('users',
             {
                 url: '/users',
                 controller: 'userController',
-                templateUrl: '/views/Authentication/users.html'
+                templateUrl: '/views/Authentication/users.html',
+                resolve: { authenticate: authenticate }
             })
         /* authentication routing end */
         /* pharmacy routing start */
@@ -85,61 +89,71 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/medicine-company',
                 controller: 'distributorController',
-                templateUrl: '/views/pharmacy/company.html'
+                templateUrl: '/views/pharmacy/company.html',
+                resolve: { authenticate: authenticate }
         })
         .state('salesMedicine',
         {
             url: '/sales-medicine',
             controller: 'posController',
-            templateUrl: '/views/pharmacy/salesMedicine.html'
+            templateUrl: '/views/pharmacy/salesMedicine.html',
+            resolve: { authenticate: authenticate }
         })
         .state('medicineSupplier',
             {
                 url: '/medicine-supplier',
                 controller: 'distributorController',
-                templateUrl: '/views/pharmacy/supplier.html'
+                templateUrl: '/views/pharmacy/supplier.html',
+                resolve: { authenticate: authenticate }
         })
         .state('medicine',
             {
                 url: '/medicine',
                 controller: 'medicineController',
-                templateUrl: '/views/pharmacy/medicine.html'
+                templateUrl: '/views/pharmacy/medicine.html',
+                resolve: { authenticate: authenticate }
         })
         .state('medicineType',
             {
                 url: '/medicine-type',
                 controller: 'medicineController',
-                templateUrl:'/views/pharmacy/medicineType.html'
+                templateUrl: '/views/pharmacy/medicineType.html',
+                resolve: { authenticate: authenticate }
         })
         .state('medicineGroup',
             {
                 url: '/medicine-group',
                 controller: 'medicineController',
-                templateUrl: '/views/pharmacy/medicineGroup.html'
+                templateUrl: '/views/pharmacy/medicineGroup.html',
+                resolve: { authenticate: authenticate }
             })
         .state('medicineStore',
             {
                 url: '/medicine-store',
                 controller: 'posController',
-                templateUrl:'/views/pharmacy/medicineStorage.html'
+                templateUrl: '/views/pharmacy/medicineStorage.html',
+                resolve: { authenticate: authenticate }
         })
         .state('soldMedicine',
             {
                 url: '/sold-medicine',
                 controller: 'posController',
-                templateUrl: '/views/pharmacy/soldMedicine.html'
+                templateUrl: '/views/pharmacy/soldMedicine.html',
+                resolve: { authenticate: authenticate }
         })
         .state('purchasedMedicine',
             {
                 url: '/purchased-medicine',
                 controller: 'posController',
-                templateUrl: '/views/pharmacy/purchasedMedicine.html'
+                templateUrl: '/views/pharmacy/purchasedMedicine.html',
+                resolve: { authenticate: authenticate }
         })
         .state('purchaseMedicine',
             {
                 url: '/purchase-medicine',
                 controller: 'posController',
-                templateUrl: '/views/pharmacy/purchaseMedicine.html'
+                templateUrl: '/views/pharmacy/purchaseMedicine.html',
+                resolve: { authenticate: authenticate }
             })
         /* pharmacy routing end */
 
@@ -148,43 +162,50 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/ipd-patient-admission',
                 controller: 'ipdController',
-                templateUrl: './views/IPD/AddIpdPatient.html'
+                templateUrl: './views/IPD/AddIpdPatient.html',
+                resolve: { authenticate: authenticate }
             })
         .state('ipdPatientList',
             {
                 url: '/ipd-patient-list',
                 controller: 'ipdPatientListController',
-                templateUrl: './views/IPD/PatientList.html'
+                templateUrl: './views/IPD/PatientList.html',
+                resolve: { authenticate: authenticate }
             })
         .state('patientDischarge',
             {
                 url: '/patient-discharge',
                 controller: 'patientDischargeController',
-                templateUrl: './views/IPD/PatientDischarge.html'
+                templateUrl: './views/IPD/PatientDischarge.html',
+                resolve: { authenticate: authenticate }
             })
        .state('ipdMedicineRequision',
             {
                 url: '/ipd-medicine-requisition',
                 controller: 'medicienRequisitionController',
-                templateUrl: './views/IPD/medicineRequisition.html'
+                templateUrl: './views/IPD/medicineRequisition.html',
+                resolve: { authenticate: authenticate }
             })
         .state('ipdPathologyRequisition',
             {
                 url: '/ipd-pathology-requisition',
                 controller: 'pathologyRequisitionController',
-                templateUrl: './views/IPD/IpdPathologyRequisition.html'
+                templateUrl: './views/IPD/IpdPathologyRequisition.html',
+                resolve: { authenticate: authenticate }
             })
         .state('ipdEquipmentRequisition',
             {
                 url: '/ipd-health-equipment-requisition',
                 controller: 'healthEquipmentRequisitionController',
-                templateUrl: './views/IPD/IpdEquipmentRequisition.html'
+                templateUrl: './views/IPD/IpdEquipmentRequisition.html',
+                resolve: { authenticate: authenticate }
             })
         .state('ipdDischargePatientList',
             {
                 url: '/ipd-discharge-patient-list',
                 controller: 'ipdDischargePatientListController',
-                templateUrl: './views/IPD/DischargePatientList.html'
+                templateUrl: './views/IPD/DischargePatientList.html',
+                resolve: { authenticate: authenticate }
             })
 
 
@@ -193,13 +214,15 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/doctor-management',
                 controller: 'doctorsMngController',
-                templateUrl: './views/Administrator/AddDoctor.html'
+                templateUrl: './views/Administrator/AddDoctor.html',
+                resolve: { authenticate: authenticate }
             })
         .state('specialist',
             {
                 url: '/specialist-management',
                 controller: 'specialistMngController',
-                templateUrl: './views/Administrator/AddSpecialistName.html'
+                templateUrl: './views/Administrator/AddSpecialistName.html',
+                resolve: { authenticate: authenticate }
             })
 
         /* Pathology Management Routing */
@@ -207,13 +230,15 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/pathology-list',
                 controller: 'pathologyController',
-                templateUrl: './views/Pathology/Add_List_Pathology.html'
+                templateUrl: './views/Pathology/Add_List_Pathology.html',
+                resolve: { authenticate: authenticate }
             })
         .state('purchaseIngradiant',
             {
                 url: '/purchase-ingradiant',
                 controller: 'purchaseIngradiantController',
-                templateUrl: './views/Pathology/PurchaseIngradiant.html'
+                templateUrl: './views/Pathology/PurchaseIngradiant.html',
+                resolve: { authenticate: authenticate }
             })
 
         /* Expenses Routing */
@@ -221,13 +246,15 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/add-expenses',
                 controller: 'addExpensesController',
-                templateUrl: './views/Expenses/AddExpenses.html'
+                templateUrl: './views/Expenses/AddExpenses.html',
+                resolve: { authenticate: authenticate }
             })
         .state('viewExpenses',
             {
                 url: '/view-expenses',
                 controller: 'viewExpensesController',
-                templateUrl: './views/Expenses/ViewReportExpenses.html'
+                templateUrl: './views/Expenses/ViewReportExpenses.html',
+                resolve: { authenticate: authenticate }
             })
 
         /* OPD Routing */
@@ -235,25 +262,29 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/opd-patient-appointment',
                 controller: 'opdPatientAppointmentController',
-                templateUrl: './views/OPD/PatientAppointment.html'
+                templateUrl: './views/OPD/PatientAppointment.html',
+                resolve: { authenticate: authenticate }
             })
         .state('opdPathologyTest',
             {
                 url: '/opd-pathology-test',
                 controller: 'opdPathologyController',
-                templateUrl: './views/OPD/opdPathologyTest.html'
+                templateUrl: './views/OPD/opdPathologyTest.html',
+                resolve: { authenticate: authenticate }
             })
         .state('opdReportDelivery',
             {
                 url: '/opd-report-delivery',
                 controller: 'opdTestReportDeliveryController',
-                templateUrl: './views/OPD/opdReportDelivery.html'
+                templateUrl: './views/OPD/opdReportDelivery.html',
+                resolve: { authenticate: authenticate }
             })
         .state('opdAppointmentDetails',
             {
                 url: '/opd-appointment-list',
                 controller: 'opdAppointmentController',
-                templateUrl: './views/OPD/opdAppointmentList.html'
+                templateUrl: './views/OPD/opdAppointmentList.html',
+                resolve: { authenticate: authenticate }
             })
 
         /* accounting routing open */
@@ -261,58 +292,91 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             {
                 url: '/create-group',
                 controller: 'groupController',
-                templateUrl: '/views/accounting/createGroup.html'
+                templateUrl: '/views/accounting/createGroup.html',
+                resolve: { authenticate: authenticate }
             })
         .state('createLedger',
             {
                 url: '/create-ledger',
                 controller: 'ledgerController',
-                templateUrl: '/views/accounting/createLedger.html'
+                templateUrl: '/views/accounting/createLedger.html',
+                resolve: { authenticate: authenticate }
             })
         .state('journalVoucher',
             {
                 url: '/journal-voucher',
                 controller: 'voucherController',
-                templateUrl: '/views/accounting/createJournalVoucher.html'
+                templateUrl: '/views/accounting/createJournalVoucher.html',
+                resolve: { authenticate: authenticate }
             })
         .state('paymentVoucher',
             {
                 url: '/payment-voucher',
                 controller: 'voucherController',
-                templateUrl: '/views/accounting/createPaymentVoucher.html'
+                templateUrl: '/views/accounting/createPaymentVoucher.html',
+                resolve: { authenticate: authenticate }
             })
         .state('receiveVoucher',
             {
                 url: '/receive-voucher',
                 controller: 'voucherController',
-                templateUrl: '/views/accounting/createReceiveVoucher.html'
+                templateUrl: '/views/accounting/createReceiveVoucher.html',
+                resolve: { authenticate: authenticate }
             })
         .state('trialBalance',
             {
                 url: '/trial-balance',
-                controller: 'voucherController'
+                controller: 'voucherController',
+                resolve: { authenticate: authenticate }
             })
         .state('balanceSheet',
             {
                 url: '/balance-sheet',
-                controller: 'voucherController'
+                controller: 'voucherController',
+                resolve: { authenticate: authenticate }
             })
         .state('ledgrBook',
             {
                 url: '/ledger-book',
-                controller: 'ledgerController'
+                controller: 'ledgerController',
+                resolve: { authenticate: authenticate }
             })
         .state('incomeStatement',
             {
                 url: '/income-statement',
-                controller: 'voucherController'
+                controller: 'voucherController',
+                resolve: { authenticate: authenticate }
             })
         .state('paymentReceiveStatement',
             {
                 url: '/payment-receive-statement',
-                controller: 'voucherController'
+                controller: 'voucherController',
+                resolve: { authenticate: authenticate }
             });
         /* accounting routing end */
+
+
+    function authenticate($q, authService, $state, $timeout, $location) {
+
+        if (authService.getAuthInfo()) {
+                // Resolve the promise successfully
+                return $q.when()
+            } else {
+                // The next bit of code is asynchronously tricky.
+
+            $timeout(function () {
+                var currentRoute = $location.path();
+                    // This code runs after the authentication promise has been rejected.
+                    // Go to the log-in page
+                    
+                    //$state.go('login', { return: 'Nahid' });
+                    $location.path("/login").search("returnTo", currentRoute);
+                })
+
+                // Reject the authentication promise to prevent the state from loading
+                return $q.reject()
+            }
+        }
 
     $locationProvider.hashPrefix('');
 });
@@ -321,40 +385,6 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
 /* Inject the AuthInterceptor Services */
 routerApp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
-});
-
-
-
-
-
-routerApp.run(function ($rootScope, $location, authService) {
-
-    function getPath(route) {
-        if (!!route && typeof (route.originalPath) === "string")
-            return "'" + route.originalPath + "'";
-        return "[unknown route, using otherwise]";
-    }
-    $rootScope.$on("$stateChangeStart", function (evt, to, from) {
-        if (to.authorize === true) {
-            to.resolve = to.resolve || {};
-            if (!to.resolve.authorizationResolver) {
-                to.resolve.authorizationResolver = function (authService) {
-                    return authService.getAuthInfo();
-
-                };
-            }
-        }
-
-    });
-
-    $rootScope.$on("$stateChangeError", function (evt, to, from, error) {
-        $location.path("/login").search("returnTo", to.originalPath);
-    });
-
-    // NOT needed in authorization / logging purposes only
-    $rootScope.$on("$stateChangeSuccess", function (evt, to, from) {
-
-    }); 
 });
 
 

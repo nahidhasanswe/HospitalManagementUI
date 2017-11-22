@@ -49,146 +49,150 @@
     <link href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link href="assets/css/customStyle.css" rel="stylesheet" />
+    <link href="Scripts/FancyBox/jquery.fancybox.css" rel="stylesheet" />
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini" data-ng-app="routerApp">
-    <div class="wrapper">
-        <header class="main-header" data-ng-controller="homeController" ng-init="getAuthorization();">
-            <!-- Logo -->
-            <a ui-sref="home" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">Hospital Management</span>
-            </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top">
-                <!-- Sidebar toggle button-->
-                <a class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
+    <div data-ng-controller="homeController">
+        <div class="wrapper">
+            <header class="main-header">
+                <!-- Logo -->
+                <a ui-sref="home" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><b>A</b>LT</span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg">Hospital Management</span>
                 </a>
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown user user-menu">
-                            <a href="" ng-click="logout()" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="dist/img/logout.png" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Logout</span>
-                            </a>
-                        </li>
-                        <!-- Control Sidebar Toggle Button -->
-                        <!--<li>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-static-top">
+                    <!-- Sidebar toggle button-->
+                    <a class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                <a href="" ng-click="logout()" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="dist/img/logout.png" class="user-image" alt="User Image">
+                                    <span class="hidden-xs">Logout</span>
+                                </a>
+                            </li>
+                            <!-- Control Sidebar Toggle Button -->
+                            <!--<li>
                           <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                         </li>-->
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar" data-ng-controller="homeController" ng-init="getAuthorization();">
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
+                        </ul>
                     </div>
-                </form>
-                <!-- /.search form -->
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <!-- Dashboard end-->
-                    <li class="active treeview">
-                        <a ui-sref="home">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <!-- Dashboard end-->
-                    <!-- OPD open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-th"></i> <span>OPD</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
+                </nav>
+            </header>
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar" data-ng-controller="homeController">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- search form -->
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="opdPatientAppointment"><i class="fa fa-circle-o"></i> Patient Appointment</a></li>
-                            <li><a ui-sref="opdAppointmentDetails"><i class="fa fa-circle-o"></i> View & Print Appointment</a></li>
-                            <li><a ui-sref="opdPathologyTest"><i class="fa fa-circle-o"></i> Pathology Test Sale</a></li>
-                            <li><a ui-sref="opdReportDelivery"><i class="fa fa-circle-o"></i> Test Report Delivery</a></li>
-                        </ul>
-                    </li>
-                    <!-- OPD end-->
-                    <!-- IPD open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-pie-chart"></i>
-                            <span>IPD</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="ipdPatientAdmission"><i class="fa fa-circle-o"></i> Patient Admission</a></li>
-                            <li><a ui-sref="ipdPathologyRequisition"><i class="fa fa-circle-o"></i> Pathology Test Requisition</a></li>
-                            <li><a ui-sref="ipdMedicineRequision"><i class="fa fa-circle-o"></i> Medicine Requisition</a></li>
-                            <li><a ui-sref="ipdEquipmentRequisition"><i class="fa fa-circle-o"></i> Health equipment Requisition</a></li>
-                            <li><a ui-sref="patientDischarge"><i class="fa fa-circle-o"></i> Patient Discharge</a></li>
-                            <!--<li ng-if="false"><a ><i class="fa fa-circle-o"></i> Discharge Prescription</a></li>-->
-                            <li><a ui-sref="ipdPatientList"><i class="fa fa-circle-o"></i> Admited Patient List</a></li>
-                            <li><a ui-sref="ipdDischargePatientList"><i class="fa fa-circle-o"></i> Discharged Patient List</a></li>
-                        </ul>
-                    </li>
-                    <!-- IPD end-->
-                    <!-- Pharmacy open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-laptop"></i>
-                            <span>Pharmacy</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="salesMedicine"><i class="fa fa-check"></i> Sale Medicine</a></li>
-                            <li><a ui-sref="purchaseMedicine"><i class="fa fa-check"></i> Buy Medicine</a></li>
-                            <li><a ui-sref="medicine"><i class="fa fa-check"></i> Medicine</a></li> 
-                            <li><a ui-sref="medicineGroup"><i class="fa fa-check"></i> Medicine Group</a></li> 
-                            <li><a ui-sref="purchasedMedicine"><i class="fa fa-check"></i> Purchased Medicine</a></li>
-                            <li><a ui-sref="soldMedicine"><i class="fa fa-check"></i> Sold Medicine</a></li>
-                            <li><a ui-sref="medicineStore"><i class="fa fa-check"></i> Medicine Storage</a></li>
-                            <!--<li><a href="pages/UI/modals.html"><i class="fa fa-check"></i> Require Medicine</a></li>-->
-                            <li><a ui-sref="medicineType"><i class="fa fa-check"></i> Medicine Type</a></li>
-                            <li><a ui-sref="medicineComapny"><i class="fa fa-check"></i> Medicine Company</a></li>
-                            <li><a ui-sref="medicineSupplier"><i class="fa fa-check"></i> Medicine Supplier</a></li> 
-                        </ul>
-                    </li>
-                    <!-- Pharmacy end-->
-                    <!-- Pathology Management open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-assistive-listening-systems"></i> <span>Pathology Management</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="pathologyManagement"><i class="fa fa-circle-o"></i> Save Pathology Test & List</a></li>
-                            <!--<li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Pathology Test List</a></li>-->
-                            <!--<li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Set Test schedule</a></li>
+                        </div>
+                    </form>
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu" data-widget="tree">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <!-- Dashboard end-->
+                        <li class="active treeview">
+                            <a ui-sref="home">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <!-- Dashboard end-->
+                        <!-- OPD open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>OPD</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="opdPatientAppointment"><i class="fa fa-circle-o"></i> Patient Appointment</a></li>
+                                <li><a ui-sref="opdAppointmentDetails"><i class="fa fa-circle-o"></i> View & Print Appointment</a></li>
+                                <li><a ui-sref="opdPathologyTest"><i class="fa fa-circle-o"></i> Pathology Test Sale</a></li>
+                                <li><a ui-sref="opdReportDelivery"><i class="fa fa-circle-o"></i> Test Report Delivery</a></li>
+                                <li><a ui-sref="opdReportDelivery"><i class="fa fa-circle-o"></i> Payment Receive</a></li>
+                            </ul>
+                        </li>
+                        <!-- OPD end-->
+                        <!-- IPD open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>IPD</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="ipdPatientAdmission"><i class="fa fa-circle-o"></i> Patient Admission</a></li>
+                                <li><a ui-sref="ipdPathologyRequisition"><i class="fa fa-circle-o"></i> Pathology Test Requisition</a></li>
+                                <li><a ui-sref="ipdMedicineRequision"><i class="fa fa-circle-o"></i> Medicine Requisition</a></li>
+                                <li><a ui-sref="ipdEquipmentRequisition"><i class="fa fa-circle-o"></i> Health equipment Requisition</a></li>
+                                <li><a ui-sref="patientDischarge"><i class="fa fa-circle-o"></i> Patient Discharge</a></li>
+                                <!--<li ng-if="false"><a ><i class="fa fa-circle-o"></i> Discharge Prescription</a></li>-->
+                                <li><a ui-sref="ipdPatientList"><i class="fa fa-circle-o"></i> Admited Patient List</a></li>
+                                <li><a ui-sref="ipdDischargePatientList"><i class="fa fa-circle-o"></i> Discharged Patient List</a></li>
+                            </ul>
+                        </li>
+                        <!-- IPD end-->
+                        <!-- Pharmacy open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Pharmacy</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="salesMedicine"><i class="fa fa-check"></i> Sale Medicine</a></li>
+                                <li><a ui-sref="purchaseMedicine"><i class="fa fa-check"></i> Buy Medicine</a></li>
+                                <li><a ui-sref="medicine"><i class="fa fa-check"></i> Medicine</a></li>
+                                <li><a ui-sref="medicineGroup"><i class="fa fa-check"></i> Medicine Group</a></li>
+                                <li><a ui-sref="purchasedMedicine"><i class="fa fa-check"></i> Purchased Medicine</a></li>
+                                <li><a ui-sref="soldMedicine"><i class="fa fa-check"></i> Sold Medicine</a></li>
+                                <li><a ui-sref="medicineStore"><i class="fa fa-check"></i> Medicine Storage</a></li>
+                                <!--<li><a href="pages/UI/modals.html"><i class="fa fa-check"></i> Require Medicine</a></li>-->
+                                <li><a ui-sref="medicineType"><i class="fa fa-check"></i> Medicine Type</a></li>
+                                <li><a ui-sref="medicineComapny"><i class="fa fa-check"></i> Medicine Company</a></li>
+                                <li><a ui-sref="medicineSupplier"><i class="fa fa-check"></i> Medicine Supplier</a></li>
+                            </ul>
+                        </li>
+                        <!-- Pharmacy end-->
+                        <!-- Pathology Management open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-assistive-listening-systems"></i> <span>Pathology Management</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="pathologyManagement"><i class="fa fa-circle-o"></i> Save Pathology Test & List</a></li>
+                                <!--<li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Pathology Test List</a></li>-->
+                                <!--<li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Set Test schedule</a></li>
                             <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Payment Receive</a></li>
                             <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Report Delevery</a></li>-->
-                            <li><a ui-sref="purchaseIngradiant"><i class="fa fa-circle-o"></i> Purchase Ingradiant</a></li>
-                        </ul>
-                    </li>
-                    <!-- Pathology Management end-->
-                    <!-- OT Management open-->
-                    <!--<li class="treeview">
+                                <li><a ui-sref="purchaseIngradiant"><i class="fa fa-circle-o"></i> Purchase Ingradiant</a></li>
+                            </ul>
+                        </li>
+                        <!-- Pathology Management end-->
+                        <!-- OT Management open-->
+                        <!--<li class="treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>OT Management</span>
                             <span class="pull-right-container">
@@ -202,9 +206,9 @@
                             <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Open New OT</a></li>
                         </ul>
                     </li>-->
-                    <!-- OT Management end-->
-                    <!-- Word Management open-->
-                    <!--<li class="treeview">
+                        <!-- OT Management end-->
+                        <!-- Word Management open-->
+                        <!--<li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Word Management</span>
@@ -219,55 +223,55 @@
                             <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                         </ul>
                     </li>-->
-                    <!-- Word Management end-->
-                    <!-- Expanse open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-table"></i> <span>Expenses</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="addExpenses"><i class="fa fa-circle-o"></i> Save Expenses</a></li>
-                            <!--<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Save Expenses from Excel</a></li>-->
-                            <li><a ui-sref="viewExpenses"><i class="fa fa-circle-o"></i> View Expenses</a></li>
-                        </ul>
-                    </li>
-                    <!-- Expanse end-->
-                    <!-- Administrator Management open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-envelope"></i> <span>Administrator Management</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a ui-sref="doctorList"><i class="fa fa-circle-o"></i> Add Doctor</a></li>
-                            <li><a ui-sref="specialist"><i class="fa fa-circle-o"></i> Add Specialist Name</a></li>
-                            <!--<li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> View Business Condition</a></li>
+                        <!-- Word Management end-->
+                        <!-- Expanse open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-table"></i> <span>Expenses</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="addExpenses"><i class="fa fa-circle-o"></i> Save Expenses</a></li>
+                                <!--<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Save Expenses from Excel</a></li>-->
+                                <li><a ui-sref="viewExpenses"><i class="fa fa-circle-o"></i> View Expenses</a></li>
+                            </ul>
+                        </li>
+                        <!-- Expanse end-->
+                        <!-- Administrator Management open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-envelope"></i> <span>Administrator Management</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a ui-sref="doctorList"><i class="fa fa-circle-o"></i> Add Doctor</a></li>
+                                <li><a ui-sref="specialist"><i class="fa fa-circle-o"></i> Add Specialist Name</a></li>
+                                <!--<li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> View Business Condition</a></li>
                             <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Call Meeting</a></li>
                             <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Meeting Calender</a></li>-->
-                        </ul>
-                    </li>
-                    <!-- Administrator Management end-->
-                    <!-- setting open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-registered"></i> <span>Settings</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>
-                        </ul>
-                    </li>
-                    <!-- Setting end-->
-                    <!-- Fixed asset open-->
-                    <!--<li class="treeview">
+                            </ul>
+                        </li>
+                        <!-- Administrator Management end-->
+                        <!-- setting open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-registered"></i> <span>Settings</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>
+                            </ul>
+                        </li>
+                        <!-- Setting end-->
+                        <!-- Fixed asset open-->
+                        <!--<li class="treeview">
                         <a href="#">
                             <i class="fa fa-calendar"></i> <span>Fixed Asset</span>
                             <span class="pull-right-container">
@@ -280,45 +284,45 @@
                             <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Present Asset</a></li>
                         </ul>
                     </li>-->
-                    <!-- Fixed Asset end -->
-                    <!-- Accounting open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-share"></i> <span>Accounting</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><i class="text-capitalize text-danger text-center"><b>MIS</b></i></li>
-                            <li><a ui-sref="createGroup"><i class="fa fa-circle-o"></i> Chart Of Accounting</a></li>
-                            <li><i class="text-capitalize text-danger text-center"><b>Creations</b></i></li>
-                            <li><a ui-sref="createGroup"><i class="fa fa-circle-o"></i> Create Group</a></li>
-                            <li><a ui-sref="createLedger"><i class="fa fa-circle-o"></i> Create Ledger</a></li>
-                            <li><i class="text-capitalize text-danger text-center"><b>Entries</b></i></li>
-                            <li><a ui-sref="journalVoucher"><i class="fa fa-circle-o"></i> Journal Voucher</a></li>
-                            <li><a ui-sref="paymentVoucher"><i class="fa fa-circle-o"></i> Payment voucher</a></li>
-                            <li><a ui-sref="receiveVoucher"><i class="fa fa-circle-o"></i> Receive Voucher</a></li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> View and Report
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a ui-sref="trialBalance"><i class="fa fa-book"></i> Trial Balance</a></li>
-                                    <li><a ui-sref="balanceSheet"><i class="fa fa-book"></i> Balance Sheet</a></li>
-                                    <li><a ui-sref="ledgrBook"><i class="fa fa-book"></i> Ledger Book</a></li>
-                                    <li><a ui-sref="incomeStatement"><i class="fa fa-book"></i> Income Statement</a></li>
-                                    <li><a ui-sref="paymentReceiveStatement"><i class="fa fa-book"></i> Payment Received Statement</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Accounting end-->
-                    <!-- Human Resource open-->
-                    <!--<li class="treeview">
+                        <!-- Fixed Asset end -->
+                        <!-- Accounting open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-share"></i> <span>Accounting</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><i class="text-capitalize text-danger text-center"><b>MIS</b></i></li>
+                                <li><a ui-sref="createGroup"><i class="fa fa-circle-o"></i> Chart Of Accounting</a></li>
+                                <li><i class="text-capitalize text-danger text-center"><b>Creations</b></i></li>
+                                <li><a ui-sref="createGroup"><i class="fa fa-circle-o"></i> Create Group</a></li>
+                                <li><a ui-sref="createLedger"><i class="fa fa-circle-o"></i> Create Ledger</a></li>
+                                <li><i class="text-capitalize text-danger text-center"><b>Entries</b></i></li>
+                                <li><a ui-sref="journalVoucher"><i class="fa fa-circle-o"></i> Journal Voucher</a></li>
+                                <li><a ui-sref="paymentVoucher"><i class="fa fa-circle-o"></i> Payment voucher</a></li>
+                                <li><a ui-sref="receiveVoucher"><i class="fa fa-circle-o"></i> Receive Voucher</a></li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> View and Report
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li><a ui-sref="trialBalance"><i class="fa fa-book"></i> Trial Balance</a></li>
+                                        <li><a ui-sref="balanceSheet"><i class="fa fa-book"></i> Balance Sheet</a></li>
+                                        <li><a ui-sref="ledgrBook"><i class="fa fa-book"></i> Ledger Book</a></li>
+                                        <li><a ui-sref="incomeStatement"><i class="fa fa-book"></i> Income Statement</a></li>
+                                        <li><a ui-sref="paymentReceiveStatement"><i class="fa fa-book"></i> Payment Received Statement</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Accounting end-->
+                        <!-- Human Resource open-->
+                        <!--<li class="treeview">
                         <a href="#">
                             <i class="fa fa-asl-interpreting"></i> <span>Human Resource</span>
                             <span class="pull-right-container">
@@ -335,227 +339,227 @@
                             <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Leave Summery All</a></li>
                         </ul>
                     </li>-->
-                    <!-- Human Resource end-->
-                    <!-- Account open-->
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-user-secret"></i> <span>Account</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li style="cursor: pointer; cursor: hand;"><a ng-click="logout();"><i class="fa fa-circle-o"></i> Log out</a></li>
-                            <li><a ui-sref="changePassword"><i class="fa fa-circle-o"></i> Change Password</a></li>
-                            <li><a ui-sref="recoverPassword"><i class="fa fa-circle-o"></i> Recover Password</a></li>
-                            <li><a ui-sref="create"><i class="fa fa-circle-o"></i> Create Account</a></li>
-                            <li><a ui-sref="users"><i class="fa fa-circle-o"></i> View User</a></li>
-                            <li><a ui-sref="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign Roles</a></li>
-                            <li><a ui-sref="createRole"><i class="fa fa-circle-o"></i> Create Role</a></li>
-                            <li><a ui-sref="roles"><i class="fa fa-circle-o"></i> View Roles</a></li>
-                            <li><a ui-sref="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign permission to Role</a></li>
-                        </ul>
-                    </li>
-                    <!-- Account end-->
-
-                    <!--<li class="header">LABELS</li>
+                        <!-- Human Resource end-->
+                        <!-- Account open-->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user-secret"></i> <span>Account</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li style="cursor: pointer; cursor: hand;"><a ng-click="logout();"><i class="fa fa-circle-o"></i> Log out</a></li>
+                                <li><a ui-sref="changePassword"><i class="fa fa-circle-o"></i> Change Password</a></li>
+                                <li><a ui-sref="recoverPassword"><i class="fa fa-circle-o"></i> Recover Password</a></li>
+                                <li><a ui-sref="create"><i class="fa fa-circle-o"></i> Create Account</a></li>
+                                <li><a ui-sref="users"><i class="fa fa-circle-o"></i> View User</a></li>
+                                <li><a ui-sref="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign Roles</a></li>
+                                <li><a ui-sref="createRole"><i class="fa fa-circle-o"></i> Create Role</a></li>
+                                <li><a ui-sref="roles"><i class="fa fa-circle-o"></i> View Roles</a></li>
+                                <li><a ui-sref="pages/tables/data.html"><i class="fa fa-circle-o"></i> Assign permission to Role</a></li>
+                            </ul>
+                        </li>
+                        <!-- Account end-->
+                        <!--<li class="header">LABELS</li>
                     <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
-                </ul>
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Main content -->
-            <section class="content">
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Main content -->
+                <section class="content">
 
-                <!-- Main row -->
-                <div class="row">
-                    <ui-view></ui-view>
-                </div>
-                <!-- /.row (main row) -->
-            </section>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.0
+                    <!-- Main row -->
+                    <div class="row">
+                        <ui-view></ui-view>
+                    </div>
+                    <!-- /.row (main row) -->
+                </section>
+                <!-- /.content -->
             </div>
-            <strong>Copyright &copy; 2014-2017 <a href="http://muhammadmasud.info">Data Assembler</a>.</strong> All rights
-            reserved.
-        </footer>
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Create the tabs -->
-            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <!-- Home tab content -->
-                <div class="tab-pane" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading">Recent Activity</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                                    <p>Will be 23 on April 24th</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-user bg-yellow"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-                                    <p>New phone +1(800)555-1234</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-                                    <p>nora@example.com</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-                                    <p>Execution time 5 seconds</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
-                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Custom Template Design
-                                    <span class="label label-danger pull-right">70%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Update Resume
-                                    <span class="label label-success pull-right">95%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Laravel Integration
-                                    <span class="label label-warning pull-right">50%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                    Back End Framework
-                                    <span class="label label-primary pull-right">68%</span>
-                                </h4>
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 2.4.0
                 </div>
-                <!-- /.tab-pane -->
-                <!-- Stats tab content -->
-                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-                <!-- /.tab-pane -->
-                <!-- Settings tab content -->
-                <div class="tab-pane" id="control-sidebar-settings-tab">
-                    <form method="post">
-                        <h3 class="control-sidebar-heading">General Settings</h3>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Report panel usage
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Some information about this general settings option
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Allow mail redirect
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Other sets of options are available
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Expose author name in posts
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                            <p>
-                                Allow the user to show his name in blog posts
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-                        <h3 class="control-sidebar-heading">Chat Settings</h3>
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Show me as online
-                                <input type="checkbox" class="pull-right" checked>
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Turn off notifications
-                                <input type="checkbox" class="pull-right">
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Delete chat history
-                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
+                <strong>Copyright &copy; 2014-2017 <a href="http://muhammadmasud.info">Data Assembler</a>.</strong> All rights
+                reserved.
+            </footer>
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- Home tab content -->
+                    <div class="tab-pane" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Recent Activity</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                        <p>Will be 23 on April 24th</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="menu-icon fa fa-user bg-yellow"></i>
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                        <p>New phone +1(800)555-1234</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                        <p>nora@example.com</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                        <p>Execution time 5 seconds</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+                        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <h4 class="control-sidebar-subheading">
+                                        Custom Template Design
+                                        <span class="label label-danger pull-right">70%</span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <h4 class="control-sidebar-subheading">
+                                        Update Resume
+                                        <span class="label label-success pull-right">95%</span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <h4 class="control-sidebar-subheading">
+                                        Laravel Integration
+                                        <span class="label label-warning pull-right">50%</span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <h4 class="control-sidebar-subheading">
+                                        Back End Framework
+                                        <span class="label label-primary pull-right">68%</span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+                    </div>
+                    <!-- /.tab-pane -->
+                    <!-- Stats tab content -->
+                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                    <!-- /.tab-pane -->
+                    <!-- Settings tab content -->
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <form method="post">
+                            <h3 class="control-sidebar-heading">General Settings</h3>
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Report panel usage
+                                    <input type="checkbox" class="pull-right" checked>
+                                </label>
+                                <p>
+                                    Some information about this general settings option
+                                </p>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Allow mail redirect
+                                    <input type="checkbox" class="pull-right" checked>
+                                </label>
+                                <p>
+                                    Other sets of options are available
+                                </p>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Expose author name in posts
+                                    <input type="checkbox" class="pull-right" checked>
+                                </label>
+                                <p>
+                                    Allow the user to show his name in blog posts
+                                </p>
+                            </div>
+                            <!-- /.form-group -->
+                            <h3 class="control-sidebar-heading">Chat Settings</h3>
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Show me as online
+                                    <input type="checkbox" class="pull-right" checked>
+                                </label>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Turn off notifications
+                                    <input type="checkbox" class="pull-right">
+                                </label>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Delete chat history
+                                    <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                                </label>
+                            </div>
+                            <!-- /.form-group -->
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
                 </div>
-                <!-- /.tab-pane -->
-            </div>
-        </aside>
-        <!-- /.control-sidebar -->
-        <!-- Add the sidebar's background. This div must be placed
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
+            <div class="control-sidebar-bg"></div>
+        </div>
     </div>
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
@@ -601,6 +605,8 @@
         
     </script>
 
+    <!--Fancy Box-->
+    <script src="Scripts/FancyBox/jquery.fancybox.js"></script>
 
     <!-- angular script start-->
     <script src="Scripts/angular.js"></script> 
@@ -622,8 +628,13 @@
     <script src="bower_components/toaster-angular/angular-toastr.tpls.min.js"></script>
     <script src="assets/datatable/angular-datatables.js"></script>
     <!--<script src="Scripts/angular-ui/ui-bootstrap.js"></script>-->
+
+
     <!-- service and factory -->
     <script src="app.js"></script>
+
+
+
     <!-- Authentication service start-->
     <script src="Services/AuthServices/AuthInterceptor.js"></script>
     <script src="Services/AuthServices/userService.js"></script>>
@@ -682,6 +693,9 @@
     <script src="Controllers/Expenses/ExpensesController.js"></script>
     <script src="Services/Expenses/ExpenseServices.js"></script>
 
+
+    <!--Report Services for view and print report-->
+    <script src="Services/ReportService/reportService.js"></script>
 
     <script src="Scripts/loading-bar.js"></script>
     <script src="Services/AuthServices/sweetalert.min.js"></script>
