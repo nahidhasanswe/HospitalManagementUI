@@ -1,0 +1,183 @@
+﻿<div class="row" ng-init="initial()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Medicine Payment Receive</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>Patient Search</h3>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="customerName" class="control-label">Patient Name:</label>
+                                    <angucomplete id="medicineName"
+                                                  placeholder="Search by patient ID"
+                                                  pause="400"
+                                                  selected-object="SelectedPatient(selectedItem)"
+                                                  url="{{serverBasePath}}/api/ipd/patient-data/admited-patient/"
+                                                  datafield="results"
+                                                  minlength="1"
+                                                  searchfields="patientNumber"
+                                                  titlefield="patientNumber,name"
+                                                  descriptionfield="phone"
+                                                  inputclass="form-control form-control-small" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="datepicker">From Date:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="date" class="form-control" ng-model="searchDate.fromDate" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="datepicker">To Date:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="date" class="form-control" ng-model="searchDate.toDate" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>Patient Information</h3>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="phone">Name:</label>
+                                    <input type="text" class="form-control" ng-model="patientInfo.name" id="phone" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="phone">Father/Husband Name:</label>
+                                    <input type="text" class="form-control" ng-model="patientInfo.fatherName" id="phone" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="phone">Phone:</label>
+                                    <input type="text" class="form-control" ng-model="patientInfo.phone" id="phone" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-block btn-success" ng-disabled="isProcessing" ng-click="searchResult(searchDate)"><i class="fa fa-search"></i> {{searchButton}}</button>
+                            </div>
+
+                           <div ng-if="isResult">
+                               <div class="col-lg-12">
+                                   <h3>Medicine Information</h3>
+                               </div>
+                               <div class="col-lg-2">
+                                   <div class="form-group">
+                                       <label for="phone">Total:</label>
+                                       <br />
+                                       <span class="form-control">{{paymentInfo.total}}</span>
+                                   </div>
+                               </div>
+                               <div class="col-lg-2">
+                                   <div class="form-group">
+                                       <label for="phone">Vat:</label>
+                                       <br />
+                                       <span class="form-control">{{paymentInfo.vat}}</span>
+                                   </div>
+                               </div>
+                               <div class="col-lg-2">
+                                   <div class="form-group">
+                                       <label for="phone">Discount:</label>
+                                       <br />
+                                       <span class="form-control">{{paymentInfo.discount}}</span>
+                                   </div>
+                               </div>
+                               <div class="col-lg-2">
+                                   <div class="form-group">
+                                       <label for="phone">Paid:</label>
+                                       <br />
+                                       <span class="form-control">{{paymentInfo.paid}}</span>
+                                   </div>
+                               </div>
+                               <div class="col-lg-2">
+                                   <div class="form-group">
+                                       <label for="phone">Due:</label>
+                                       <br />
+                                       <span class="form-control">{{paymentInfo.due}}</span>
+                                   </div>
+                               </div>
+
+                               <div class="col-lg-12">
+                                   <table class="table table-bordered table-hover">
+                                       <thead>
+                                           <tr>
+                                               <th>SL</th>
+                                               <th>Medicine Name</th>
+                                               <th>Quantity</th>
+                                               <th>Rate</th>
+                                               <th>Price</th>
+                                               <th>Sold Date</th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <tr ng-repeat="medicine in paymentInfo.medicineSales">
+                                               <td>{{ $index + 1 }}</td>
+                                               <td>{{ medicine.medicineName }}</td>
+                                               <td>{{ medicine.quantity }}</td>
+                                               <td>{{ medicine.rate }}</td>
+                                               <td>{{ medicine.price }}</td>
+                                               <td>{{ medicine.soldDate|date }}</td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                               </div>
+
+                               <form name="formData" ng-submit="medicineDuePayment(patientPaymentInfo, formData.$valid)" novalidate>
+                                   <div class="col-lg-3">
+                                       <div class="form-group">
+                                           <label for="phone">Payment Amount:</label>
+                                           <input type="number" class="form-control" ng-model="patientPaymentInfo.Paid" required>
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-3">
+                                       <div class="form-group">
+                                           <label for="datepicker">Transaction Date:</label>
+                                           <div class="input-group date">
+                                               <div class="input-group-addon">
+                                                   <i class="fa fa-calendar"></i>
+                                               </div>
+                                               <input type="date" class="form-control" ng-model="patientPaymentInfo.TransactionDate" required>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-3">
+                                       <div class="form-group">
+                                           <label for="phone" style="color: white">:</label>
+                                           <button type="submit" class="btn btn-block btn-primary" ng-disabled="isProcessing"><i class="fa fa-payment"></i> {{paymentButton}}</button>
+                                       </div>
+                                   </div>
+                               </form>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="panel-footer"><strong>Accounting voucher</strong></div>-->
+            </div>
+        </div>
+    </div>
+</div> 

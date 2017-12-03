@@ -91,14 +91,14 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 controller: 'distributorController',
                 templateUrl: '/views/pharmacy/company.html',
                 resolve: { authenticate: authenticate }
-        })
+            })
         .state('salesMedicine',
         {
             url: '/sales-medicine',
             controller: 'posController',
             templateUrl: '/views/pharmacy/salesMedicine.html',
             resolve: { authenticate: authenticate }
-        })
+            })
         .state('medicineSupplier',
             {
                 url: '/medicine-supplier',
@@ -119,7 +119,7 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 controller: 'medicineController',
                 templateUrl: '/views/pharmacy/medicineType.html',
                 resolve: { authenticate: authenticate }
-        })
+            })
         .state('medicineGroup',
             {
                 url: '/medicine-group',
@@ -133,21 +133,21 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 controller: 'posController',
                 templateUrl: '/views/pharmacy/medicineStorage.html',
                 resolve: { authenticate: authenticate }
-        })
+            })
         .state('soldMedicine',
             {
                 url: '/sold-medicine',
                 controller: 'posController',
                 templateUrl: '/views/pharmacy/soldMedicine.html',
                 resolve: { authenticate: authenticate }
-        })
+            })
         .state('purchasedMedicine',
             {
                 url: '/purchased-medicine',
                 controller: 'posController',
                 templateUrl: '/views/pharmacy/purchasedMedicine.html',
                 resolve: { authenticate: authenticate }
-        })
+            })
         .state('purchaseMedicine',
             {
                 url: '/purchase-medicine',
@@ -155,6 +155,13 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 templateUrl: '/views/pharmacy/purchaseMedicine.html',
                 resolve: { authenticate: authenticate }
             })
+        .state('madicinePaymentReceive',
+        {
+            url: '/medicine-payment-receive',
+            controller: 'medicinePaymentController',
+            templateUrl: '/views/pharmacy/paymentReceive.html',
+            resolve: { authenticate: authenticate }
+        })
         /* pharmacy routing end */
 
         // IPD routing
@@ -207,7 +214,13 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 templateUrl: './views/IPD/DischargePatientList.html',
                 resolve: { authenticate: authenticate }
             })
-
+        .state('ipdPaymentReceive',
+            {
+                url: '/ipd-payment-receive',
+                controller: 'ipdPaymentController',
+                templateUrl: './views/IPD/paymentReceive.html',
+                resolve: { authenticate: authenticate }
+            })
 
         /* Administrator Management Setting Routing */
         .state('doctorList',
@@ -222,6 +235,20 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 url: '/specialist-management',
                 controller: 'specialistMngController',
                 templateUrl: './views/Administrator/AddSpecialistName.html',
+                resolve: { authenticate: authenticate }
+            })
+        .state('paymentReceiveByManager',
+            {
+                url: '/payment-receive-by-manager',
+                controller: 'paymentReceiveController',
+                templateUrl: './views/Administrator/paymentReceiveByManager.html',
+                resolve: { authenticate: authenticate }
+            })
+        .state('auditReport',
+            {
+                url: '/audit-report',
+                controller: 'auditReportController',
+                templateUrl: './views/Administrator/auditReport.html',
                 resolve: { authenticate: authenticate }
             })
 
@@ -240,7 +267,14 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 templateUrl: './views/Pathology/PurchaseIngradiant.html',
                 resolve: { authenticate: authenticate }
             })
-
+        .state('saveLaboratoryEquipment',
+            {
+                url: '/save-laboratory-equipment',
+                controller: 'saveLaboratoryEquipmentController',
+                templateUrl: './views/Pathology/saveLaboratoryEquipment.html',
+                resolve: { authenticate: authenticate }
+            })
+    
         /* Expenses Routing */
         .state('addExpenses',
             {
@@ -257,6 +291,22 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 resolve: { authenticate: authenticate }
             })
 
+        //Health Equipment Routing
+        .state('saveViewHealthEquipment',
+            {
+                url: '/save-view-health-equipment',
+                controller: 'healthEquipmentController',
+                templateUrl: './views/HealthEquipment/SaveAndView.html',
+                resolve: { authenticate: authenticate }
+            })
+
+        .state('purchaseHealthEquipment',
+            {
+                url: '/purchase-health-equipment',
+                controller: 'purchaseHealthEquipmentController',
+                templateUrl: './views/HealthEquipment/purchaseEquipment.html',
+                resolve: { authenticate: authenticate }
+            })
         /* OPD Routing */
         .state('opdPatientAppointment',
             {
@@ -287,7 +337,29 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                 resolve: { authenticate: authenticate }
             })
 
+        .state('opdPaymentReceive',
+            {
+                url: '/opd-payment-receive',
+                controller: 'opdPaymentReceiveController',
+                templateUrl: './views/OPD/OpdPaymentReceive.html',
+                resolve: { authenticate: authenticate }
+            })
+
         /* accounting routing open */
+        .state('createChartOfAccouting',
+            {
+                url: '/create-chart-accouting',
+                controller: 'chartAccountingController',
+                templateUrl: '/views/accounting/createChartAccouting.html',
+                resolve: { authenticate: authenticate }
+            })
+        .state('createMisName',
+            {
+                url: '/create-mis-name',
+                controller: 'misController',
+                templateUrl: '/views/accounting/createMIS.html',
+                resolve: { authenticate: authenticate }
+            })
         .state('createGroup',
             {
                 url: '/create-group',
@@ -359,24 +431,17 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
     function authenticate($q, authService, $state, $timeout, $location) {
 
         if (authService.getAuthInfo()) {
-                // Resolve the promise successfully
                 return $q.when()
-            } else {
-                // The next bit of code is asynchronously tricky.
+        } else {
 
             $timeout(function () {
                 var currentRoute = $location.path();
-                    // This code runs after the authentication promise has been rejected.
-                    // Go to the log-in page
-                    
-                    //$state.go('login', { return: 'Nahid' });
-                    $location.path("/login").search("returnTo", currentRoute);
-                })
 
-                // Reject the authentication promise to prevent the state from loading
-                return $q.reject()
-            }
+                $location.path("/login").search("returnTo", currentRoute);
+            })
+              return $q.reject()
         }
+    }
 
     $locationProvider.hashPrefix('');
 });
@@ -396,8 +461,9 @@ routerApp.config(function (cfpLoadingBarProvider, toastrConfig) {
 
 
 /* Global Constant Domain Name for API */
-//'http://hms.a2zmanagementsystem.com'
-routerApp.constant('serviceBasePath','https://masud.azurewebsites.net');
+//'http://masud.azurewebsites.net'
+// routerApp.constant('serviceBasePath','http://hms.a2zmanagementsystem.com');
+routerApp.constant('serviceBasePath','http://masud.azurewebsites.net');
 
 //routerApp.run(function ($rootScope, $localtion) {
 //    $rootScope.location = $localtion;

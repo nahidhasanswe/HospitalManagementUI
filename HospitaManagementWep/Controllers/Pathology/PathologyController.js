@@ -60,63 +60,164 @@
 
 });
 
-routerApp.controller('purchaseIngradiantController', function ($scope, $location, administratorService, toastr, $state) {
+routerApp.controller('purchaseIngradiantController', function ($scope, serviceBasePath, pathologyService, toastr, $state, ipdService, reportCreate) {
+
+    $scope.serverBasePath = serviceBasePath;
+
+    $scope.initialObject = function () {
+        $scope.purchaseIngradiant = {
+            TransactionDate: new Date(),
+            Total: 0,
+            Discount: 0,
+            Vat: 0,
+            Due: 0,
+            Paid: 0,
+            EquipmentPurchases: []
+        };
+
+        $scope.equipment = {
+            EquipmentId: '',
+            name: '',
+            Rate: 0,
+            quantity: 0,
+            MeasurementUnit: ''
+        };
+
+        ipdService.getMeasurementUnit().then(function (response) {
+            $scope.measurementUnitList = response.data;
+        })
+    }
+
+    $scope.initialObject();
+
+    $scope.initial = function () {
+        $scope.submitButton = 'Submit';
+        $scope.isProcessing = false;
+    }
+
+    $scope.selectedEquipment = function (selectedData) {
+        var data = selectedData.originalObject;
+        $scope.equipment.EquipmentId = data.id;
+        $scope.equipment.name = data.name;
+        $scope.equipment.Rate = data.saleRate;
+        $scope.equipment.Quantity = 1;
+    }
+
+    $scope.addEquipment = function (data, valid) {
+        if (valid) {
+            $scope.purchaseIngradiant.EquipmentPurchases.push(data);
+            $scope.equipment = {
+                EquipmentId: '',
+                name: '',
+                Rate: 0,
+                quantity: 0,
+                MeasurementUnit: ''
+            };
+        } else {
+            toastr.error('Please provide proper information');
+        }
+    }
+
+    $scope.removeEquipment = function (index) {
+        $scope.purchaseIngradiant.EquipmentPurchases.splice(index, 1);
+    }
+
+    $scope.getTotal = function () {
+        var sum = 0;
+        angular.forEach($scope.purchaseIngradiant.EquipmentPurchases, function (item) {
+            sum = sum + (item.Rate * item.Quantity);
+        })
+        return sum + $scope.purchaseIngradiant.Vat;
+    }
+
+    $scope.getDue = function () {
+        var total = $scope.getTotal();
+        return total - $scope.purchaseIngradiant.Discount - $scope.purchaseIngradiant.Paid;
+    }
+
+    $scope.savedPurchaseIngradiant = function (data) {
+        if (data.patientId == '' && data.PatientAdmId == '') {
+            toastr.error('Provide proper information');
+        } else {
+            $scope.submitButton = 'Submitting....';
+            $scope.isProcessing = true;
+
+            data.Total = $scope.getTotal();
+            data.Due = $scope.getDue();
+            pathologyService.savePurchaseIngradiant(data).then(function (response) {
+                swal('Successful', 'Successfully added !!', 'success');
+                $state.reload();
+                viewReport(response.data);
+            }, function (error) {
+                toastr.error(error.data.message);
+                $scope.initial();
+            });
+        }
+    }
+
+
+    function viewReport(data) {
+        reportCreate.purchaseIngradiant(data);
+    }
+});
+
+routerApp.controller('saveLaboratoryEquipmentController', function ($scope, serviceBasePath, pathologyService, toastr, $state, ipdService, reportCreate) {
 
     $scope.initButton = function () {
         $scope.createButton = 'Save';
         $scope.isProcessing = false;
-        $scope.isUpdatable = false;
         $scope.updateButton = 'Update';
+        $scope.isUpdatable = false;
     }
 
     $scope.dataLoad = function () {
-        administratorService.getSpecialist().then(function (response) {
-            $scope.specialistItems = response.data;
+        pathologyService.getLaboratoryEquipment().then(function (response) {
+            $scope.equipmentList = response.data;
         });
     }
 
     $scope.dataLoad();
 
-    $scope.saveSpecialistName = function (data, valid) {
+    $scope.saveLaboratoryEquipment = function (data, valid) {
         if (valid) {
-            $scope.createButton = 'saving....';
+            $scope.createButton = 'Saving....';
             $scope.isProcessing = true;
-            administratorService.saveSpecialistName(data).then(function (response) {
-                swal('Successful', 'The specialist name is successfully added', 'success');
-                $scope.initButton();
+            pathologyService.saveLaboratoryEquipment(data).then(function (response) {
+                swal('Success', 'Successfully added Laboratory Equipment', 'success');
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error('Internal Server Problem');
             })
         } else {
             toastr.error('Please provide required information');
         }
     }
 
-    $scope.UpdateSpecialist = function (item) {
-        $scope.updateSpecialist = {};
-        angular.copy(item, $scope.updateSpecialist);
-        $scope.isUpdatable = true;
-    }
-
-    $scope.updateSpecialistName = function (data, valid) {
+    $scope.updatedPathologyInformation = function (data, valid) {
         if (valid) {
             $scope.updateButton = 'Updating....';
             $scope.isProcessing = true;
-            administratorService.saveSpecialistName(data).then(function (response) {
-                swal('Successful', 'The specialist name is successfully updated', 'success');
+            pathologyService.saveLaboratoryEquipment(data).then(function (response) {
+                swal('Success', 'Successfully Updated Laboratory Equipment Info', 'success');
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error('Internal Server Problem');
             })
         } else {
             toastr.error('Please provide required information');
         }
     }
 
-    $scope.cancel = function () {
+    $scope.UpdateLaboratoryEquipment = function (data) {
+        $scope.updateEquipment = {};
+        angular.copy(data, $scope.updateEquipment)
+
+        $scope.isUpdatable = true;
+    }
+
+    $scope.cancelUpdate = function () {
         $scope.isUpdatable = false;
     }
 });

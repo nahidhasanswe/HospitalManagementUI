@@ -1,0 +1,82 @@
+﻿<div class="col-md-12" ng-init="initButton()">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4 class="text-center text-capitalize text-bold text-default">Audit Report</h4>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="search" ng-submit="getPaymentList(searchData,search.$valid)" novalidate>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="fromDate">Employee Name: </label>
+                            <angucomplete id="medicineName"
+                                          placeholder="Search by Employee Name"
+                                          pause="400"
+                                          selected-object="selectedUser(selectedItem)"
+                                          url="{{serverBasePath}}/api/accounting/installment-receive/username-id/"
+                                          datafield="results"
+                                          minlength="1"
+                                          searchfields="userName"
+                                          titlefield="userName"
+                                          inputclass="form-control form-control-small" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="fromDate">From Date: </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" class="form-control" ng-model="searchData.fromDate" id="fromDate" placeholder="From Date" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="toDate">To Date: </label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" class="form-control" ng-model="searchData.toDate" id="toDate" placeholder="To Date" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="btn" style="color: white">Search Button</label>
+                            <button type="submit" id="btn" class="btn btn-primary btn-block" style="height:100%" ng-disabled="isProcessing"><i class="fa fa-search" aria-hidden="true"></i> {{createButton}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Employee Name</th>
+                        <th>Amount</th>
+                        <th>Receive Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="payment in paymentList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{payment.user}}</td>
+                        <td>{{payment.amount}}</td>
+                        <td>{{payment.receivedDate|date}}</td>
+                        <td>
+                            <span ng-if="payment.status" class="label label-success">valid</span>
+                            <span ng-if="!payment.status" class="label label-danger">invalid</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

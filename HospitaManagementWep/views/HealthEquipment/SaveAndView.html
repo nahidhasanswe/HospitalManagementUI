@@ -1,0 +1,142 @@
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-lg-4" ng-if="!isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Save Health Equipment</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="saveEquipment(equipment,formdata.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Equipment Name</label>
+                                    <input type="text" class="form-control" id="name" ng-model="equipment.name" placeholder="Name of Health Equipment" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Perchase Rate</label>
+                                    <input type="number" class="form-control" id="name" ng-model="equipment.puchaseRate" placeholder="Purchase Rate" required min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Sale Rate</label>
+                                    <input type="number" class="form-control" id="name" ng-model="equipment.saleRate" placeholder="Sale Rate" required min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Initial Quantity</label>
+                                    <input type="number" class="form-control" id="name" ng-model="equipment.inititalBalance" placeholder="Initial Balance" required min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="mlist">Measurement Unit: </label>
+                                    <select id="mlist" ng-model="equipment.measurmentUnit" class="form-control" required>
+                                        <option value="">Select Measurement Unit</option>
+                                        <option ng-repeat="item in measurementUnitList" value="{{item}}">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{createButton}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4" ng-if="isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Update Health Equipment Information</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="updatedEquipmentInformation(updateEquipment,formdata.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Equipment Name</label>
+                                    <input type="text" class="form-control" id="name" ng-model="updateEquipment.name" placeholder="Name of HEalth Equipment" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Purchase Rate</label>
+                                    <input type="number" class="form-control" id="name" ng-model="updateEquipment.puchaseRate" placeholder="Purchase Rate" required min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Sale Rate</label>
+                                    <input type="number" class="form-control" id="name" ng-model="updateEquipment.saleRate" placeholder="Sales Rate" required min="0" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="mlist">Measurement Unit: </label>
+                                    <select id="mlist" ng-model="updateEquipment.measurmentUnit" class="form-control" required>
+                                        <option value="">Select Measurement Unit</option>
+                                        <option ng-repeat="item in measurementUnitList" value="{{item}}">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{updateButton}}</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="button" class="btn btn-danger btn-block" ng-click="cancelUpdate()" ng-disabled="isProcessing"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Health Equipment List</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Equipment Name</th>
+                                <th>Measurment Unit</th>
+                                <th>Purchase Rate</th>
+                                <th>Sale Rate</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="equipment in equipmentList">
+                                <td>{{$index + 1}}</td>
+                                <td>{{equipment.name}}</td>
+                                <td>{{equipment.measurmentUnit}}</td>
+                                <td>{{equipment.puchaseRate}}</td>
+                                <td>{{equipment.saleRate}}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" ng-click="UpdateEquipmentInfo(equipment)" type="submit"><span class="fa fa-pencil-square-o"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

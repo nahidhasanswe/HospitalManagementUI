@@ -1,4 +1,4 @@
-routerApp.controller('ipdController', function ($scope, $location, ipdService, distributorService, toastr, serviceBasePath){  
+routerApp.controller('ipdController', function ($scope, $location, ipdService, $state, toastr, serviceBasePath, reportCreate){  
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -117,8 +117,10 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, d
             data.due = $scope.getDue();
             ipdService.admitPatient(data).then(function(response) {
                 swal('Successful',response.data,'success');
-                $scope.initButton();
-                $scope.initialObject();
+                //$scope.initButton();
+                //$scope.initialObject();
+                $state.reload();
+                reportCreate.IpdPatientAdmission(response.data);
             }, function(error) {
                 $scope.initButton();
                 toastr.error(error.data);
@@ -145,7 +147,7 @@ routerApp.controller('ipdPatientListController', function ($scope, $location,ipd
     }    
 });
 
-routerApp.controller('patientDischargeController', function ($scope, $location, ipdService, distributorService, toastr) {
+routerApp.controller('patientDischargeController', function ($scope, $location, ipdService, $state, toastr, reportCreate) {
 
     $scope.initial = function () {
         $scope.searchButton = 'Search';
@@ -188,8 +190,10 @@ routerApp.controller('patientDischargeController', function ($scope, $location, 
             ipdService.dischargePatient(data).then(function (response) {
                 $scope.initial();
                 swal('Successfull', 'Successfully discharged the patient', 'success');
-                $scope.patient = null;
-                $scope.searchId = '';
+                //$scope.patient = null;
+                //$scope.searchId = '';
+                $state.reload();
+                reportCreate.IpdPatientDischarge(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initial();
@@ -201,7 +205,7 @@ routerApp.controller('patientDischargeController', function ($scope, $location, 
 
 });
 
-routerApp.controller('medicienRequisitionController', function ($scope, $location, $state , ipdService, distributorService, toastr, medicineDataService, serviceBasePath) {
+routerApp.controller('medicienRequisitionController', function ($scope, $location, ipdService, $state, toastr, medicineDataService, serviceBasePath, reportCreate) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -295,6 +299,7 @@ routerApp.controller('medicienRequisitionController', function ($scope, $locatio
             ipdService.addMedicineRequisition(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
+                reportCreate.IpdMedicineRequisition(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initial();
@@ -306,7 +311,7 @@ routerApp.controller('medicienRequisitionController', function ($scope, $locatio
 
 });
 
-routerApp.controller('pathologyRequisitionController', function ($scope, $location, $state, ipdService, distributorService, toastr, medicineDataService, serviceBasePath) {
+routerApp.controller('pathologyRequisitionController', function ($scope, $location, $state, ipdService, $state, toastr, medicineDataService, serviceBasePath, reportCreate) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -397,6 +402,7 @@ routerApp.controller('pathologyRequisitionController', function ($scope, $locati
             ipdService.addPathologyRequisition(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
+                reportCreate.IpdPathologyRequisition(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initial();
@@ -405,7 +411,7 @@ routerApp.controller('pathologyRequisitionController', function ($scope, $locati
     }
 });
 
-routerApp.controller('healthEquipmentRequisitionController', function ($scope, $location, $state, ipdService, distributorService, toastr, medicineDataService, serviceBasePath) {
+routerApp.controller('healthEquipmentRequisitionController', function ($scope, $location, $state, ipdService, toastr, medicineDataService, serviceBasePath, reportCreate) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -501,6 +507,7 @@ routerApp.controller('healthEquipmentRequisitionController', function ($scope, $
             ipdService.addEquipmentRequisition(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
+                reportCreate.IpdEquipmentRequision(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initial();
@@ -530,6 +537,108 @@ routerApp.controller('ipdDischargePatientListController', function ($scope, $loc
             })
         } else {
             toastr.error('Please provide required information');
+        }
+    }
+
+    $scope.searchDate = {
+        fromDate: new Date(new Date().getTime() - (30 * 24 * 60 * 60 * 1000)),
+        toDate: new Date()
+    };
+
+});
+
+routerApp.controller('ipdPaymentController', function ($scope, ipdService, $state, toastr, serviceBasePath, reportCreate) {
+
+    $scope.initButton = function () {
+        $scope.searchButton = 'Search';
+        $scope.paymentButton = 'Payment';
+        $scope.isProcessing = false;
+    }
+
+    function loadObject () {
+        $scope.isPatientInfo = false;
+        $scope.isResult = false;
+
+        $scope.paymentInfo = {
+            TransactionDate : new Date(),
+            patientId: '',
+            admissionId: '',
+            Total: 0,
+            Discount: 0,
+            Vat: 0,
+            Due: 0,
+            Paid: 0
+        }
+
+        $scope.patientInfo = {
+            admissionId: '',
+            name: '',
+            fatherName: '',
+            phone: ''
+        }
+    }
+
+    loadObject();
+
+    $scope.SearchPaymentInfo = function (admissionId) {
+        $scope.searchButton = 'Searching...';
+        $scope.isProcessing = true;
+        ipdService.getPaymentInfo(admissionId).then(function (response) {
+            $scope.patientPaymentInfo = response.data;
+            $scope.isResult = true;
+            $scope.initButton();
+        }, function (error) {
+            console.log(error.data);
+            $scope.initButton();
+        })
+    }
+
+    $scope.SelectedPatient = function (selectedPatient) {
+        $scope.isPatientInfo = true;
+        $scope.info = selectedPatient.originalObject;
+
+        $scope.patientInfo.admissionId = $scope.info.admissionId;
+        $scope.patientInfo.name = $scope.info.name;
+        $scope.patientInfo.fatherName = $scope.info.fatherName;
+        $scope.patientInfo.phone = $scope.info.phone;
+    }
+
+    $scope.serverBasePath = serviceBasePath;
+
+    $scope.getPatientList = function (data, valid) {
+        if (valid) {
+            $scope.createButton = 'Searching....';
+            $scope.isProcessing = true;
+            ipdService.getDischargePatientList(data).then(function (response) {
+                $scope.patientList = response.data;
+
+                $scope.paymentInfo.patientId = $scope.info.id;
+                $scope.paymentInfo.admissionId = $scope.info.admissionId;
+
+                $scope.initButton();
+            }, function (error) {
+                $scope.initButton();
+                toastr.error('Internal Server Problem');
+            })
+        } else {
+            toastr.error('Please provide required information');
+        }
+    }
+
+    $scope.ipdPayment = function (paymentData, valid) {
+        if (valid) {
+            $scope.paymentButton = 'Payment.....';
+            $scope.isProcessing = true;
+            ipdService.duePayment(paymentData).then(function (response) {
+                swal('Successful', 'Successfully    Payment', 'success');
+                $state.reload();
+                reportCreate.IpdEquipmentRequision(response.data);
+            }, function (error) {
+                $scope.initButton();
+                toastr.error(error.data);
+            })
+        } else {
+            toastr.error('Please input valid Data');
         }
     }
 

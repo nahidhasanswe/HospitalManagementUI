@@ -95,7 +95,7 @@
     }
 });
 
-routerApp.controller('opdPathologyController', function ($scope, $location, opdService, toastr, serviceBasePath, $state) {
+routerApp.controller('opdPathologyController', function ($scope, $location, opdService, toastr, serviceBasePath, $state, reportCreate) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -241,6 +241,7 @@ routerApp.controller('opdPathologyController', function ($scope, $location, opdS
             opdService.savePathologyTestSale(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
+                reportCreate.OpdPathologyTestReport(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initButton();
@@ -249,143 +250,62 @@ routerApp.controller('opdPathologyController', function ($scope, $location, opdS
     }
 });
 
-routerApp.controller('opdTestReportDeliveryController', function ($scope, $location, opdService, toastr, serviceBasePath, reportService) {
+routerApp.controller('opdTestReportDeliveryController', function ($scope, $state, opdService, toastr, serviceBasePath, reportService) {
 
     $scope.serverBasePath = serviceBasePath;
 
     $scope.initButton = function () {
-        $scope.createButton = 'Submit';
+        $scope.searchButton = 'Search';
+        $scope.deliveryButton = 'Delivery Report';
         $scope.isProcessing = false;
     }
 
-    $scope.ExistPatientText = 'Exist Patient';
-    $scope.isExist = false;
+    $scope.isResult = false;
 
-    $scope.ExistPatient = function () {
-        $scope.isExist = !$scope.isExist;
-        if ($scope.isExist)
-            $scope.ExistPatientText = 'Hide';
-        else
-            $scope.ExistPatientText = 'Exist Patient';
-    }
-
-    function getDoctorList() {
-        ipdService.getDoctorsListForReference().then(function (response) {
-            $scope.doctorList = response.data;
-        }, function (error) {
-            toastr.error('Internal Server Problem');
-        })
-    }
-
-    function getAgentList() {
-        ipdService.getAgentListForReference().then(function (response) {
-            $scope.agentList = response.data;
-        }, function (error) {
-            toastr.error('Internal Server Problem');
-        })
-    }
-
-    $scope.SelectedPatient = function (selected) {
-        if (selected) {
-            var selectedObject = selected.originalObject;
-            $scope.admission = {
-                id: selectedObject.id,
-                name: selectedObject.name,
-                fatherName: selectedObject.fatherName,
-                villOrHouseAddress: selectedObject.villOrHouseAddress,
-                postOffice: selectedObject.postOffice,
-                postCode: selectedObject.postCode,
-                PoliceStation: selectedObject.policeStation,
-                District: selectedObject.district,
-                Phone: selectedObject.phone,
-                AdmissionFee: 0,
-                ReferencedBy: '',
-                Agent: '',
-                ContractAmount: 0,
-                transactionDate: new Date(),
-                Purpose: '',
-                Paid: 0,
-                Vat: 0,
-                total: 0,
-                due: 0,
-                discount: 0
-            }
-        }
-    }
 
     $scope.initButton();
 
-    $scope.initialObject = function () {
-        $scope.admission = {
-            id: '',
-            name: '',
-            fatherName: '',
-            villOrHouseAddress: '',
-            postOffice: '',
-            postCode: '',
-            PoliceStation: '',
-            District: '',
-            Phone: '',
-            Email: '',
-            AdmissionFee: 0,
-            ReferencedBy: '',
-            Agent: '',
-            ContractAmount: 0,
-            transactionDate: new Date(),
-            Purpose: '',
-            Paid: 0,
-            Vat: 0,
-            total: 0,
-            due: 0,
-            discount: 0
-        }
-
-        getDoctorList();
-        getAgentList();
-    }
-
-    $scope.getTotal = function () {
-        return $scope.admission.AdmissionFee + $scope.admission.ContractAmount + $scope.admission.Vat - $scope.admission.discount;
-    }
-
-    $scope.getDue = function () {
-        return $scope.getTotal() - $scope.admission.Paid;
-    }
-
-    $scope.afterSelectedDoctor = function (selected) {
-        $scope.admission.ReferencedBy = selected.originalObject.id;
-    }
-
-    $scope.afterSelectedAgent = function (selected) {
-        $scope.admission.Agent = selected.originalObject.id;
-    }
-
-    $scope.admitIpdPatient = function (data, valid) {
+    $scope.searchReportDelivery = function (data, valid) {
         if (valid) {
-            $scope.createButton = 'submitting ....';
             $scope.isProcessing = true;
-            data.total = $scope.getTotal();
-            data.due = $scope.getDue();
-            ipdService.admitPatient(data).then(function (response) {
-                swal('Successful', response.data, 'success');
+            $scope.searchButton = 'Searching...';
+            opdService.getReportDetails(data).then(function (response) {
+                $scope.testReport = response.data;
+                $scope.isResult = true;
                 $scope.initButton();
-                $scope.initialObject();
             }, function (error) {
+                toastr.error('No Result Found');
                 $scope.initButton();
-                toastr.error(error.data);
-            });
+            })
         } else {
-            toastr.info('Please provide all required information');
+            toastr.error('Please provice invoice number then press search button');
         }
     }
 
+    $scope.deliveryReport = function (data) {
+            $scope.isProcessing = true;
+            $scope.deliveryButton = 'Delivery...';
+            var obj = {
+                Id: data,
+                IsReportDelivered: true
+            };
+
+            opdService.reportDelivery(obj).then(function (response) {
+                toastr.success('Successfully delivery repoort status updated');
+                $state.reload();
+            }, function (error) {
+                toastr.error('Something is wrong');
+                console.log(error);
+                $scope.initButton();
+            })
+    }
 
     $scope.reportView = function () {
         reportService.viewReport(12);
     }
 });
 
-routerApp.controller('opdAppointmentController', function ($scope, $location, opdService, ipdService, toastr, serviceBasePath) {
+routerApp.controller('opdAppointmentController', function ($scope, $state, opdService, ipdService, toastr, serviceBasePath, reportCreate) {
 
     $scope.serverBasePath = serviceBasePath;
 
@@ -419,8 +339,6 @@ routerApp.controller('opdAppointmentController', function ($scope, $location, op
         $scope.searchAppointment.DoctorId = selected.originalObject.id;
     }
 
-    $scope.pdfSrc = "http://localhost:49866/test.pdf";
-
     $scope.getAppointmentList = function (data, valid) {
         if (valid) {
             $scope.isProcessing = true;
@@ -435,5 +353,69 @@ routerApp.controller('opdAppointmentController', function ($scope, $location, op
         } else {
             toastr.info('Please provide all required information');
         }
+    }
+
+    $scope.generateReport = function () {
+        reportCreate.AppointmentList(1);
+    }
+});
+
+routerApp.controller('opdPaymentReceiveController', function ($scope, $state, opdService, toastr, serviceBasePath, reportCreate) { 
+
+    $scope.initButton = function () {
+        $scope.searchButton = 'Search';
+        $scope.paymentButton = 'Receive Payment';
+        $scope.isProcessing = false;
+    }
+
+    $scope.isResult = false;
+
+
+    $scope.initButton();
+
+    $scope.searchReportDelivery = function (data, valid) {
+        if (valid) {
+            $scope.isProcessing = true;
+            $scope.searchButton = 'Searching...';
+            opdService.getReportDetails(data).then(function (response) {
+                $scope.testReport = response.data;
+                $scope.isResult = true;
+                $scope.initButton();
+            }, function (error) {
+                toastr.error('No Result Found');
+                $scope.initButton();
+            })
+        } else {
+            toastr.error('Please provice invoice number then press search button');
+        }
+    }
+
+    $scope.payment = {
+        TransactionDate: new Date(),
+        amount: 0
+    }
+
+    $scope.paymentReceive = function (data, valid) {
+        if (valid) {
+            $scope.isProcessing = true;
+            data.InvoiceId = $scope.testReport.invoiceId;
+            data.InvoiceNumber = $scope.testReport.invoiceNumber;
+            data.PatientId = $scope.testReport.patientId;
+
+            opdService.paymentReceive(data).then(function (response) {
+                $state.reload();
+                reportCreate.OpdPaymentReceive(response.data);
+            }, function (error) {
+                $scope.initButton();
+                toastr.error('Internal Server Problem');
+            })
+        } else {
+            $scope.initButton();
+            toastr.error('Provice valid information');
+        }
+    }
+
+    generateReport = function (data) {
+        reportCreate.AppointmentList(data);
     }
 });

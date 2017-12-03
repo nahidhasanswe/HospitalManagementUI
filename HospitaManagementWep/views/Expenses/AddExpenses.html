@@ -1,1 +1,114 @@
-﻿
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Save Expenses</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <form name="admitForm" ng-submit="SaveExpenses(expense,admitForm.$valid)" novalidate>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4>Expenses Information</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="datepicker">Transaction Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-model="expense.transactionDate" id="datepicker" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h4>Expenses Details</h4>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="discount">Expense Description: </label>
+                                        <input type="text" class="form-control" ng-model="singleExpense.description" id="discount" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="discount">Expense Cost: </label>
+                                        <input type="number" class="form-control" ng-model="singleExpense.amount" id="discount" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label for="ac">Action</label><br />
+                                        <button id="ac" class="btn btn-success btn-sm" type="button" ng-click="addExpenses(singleExpense)"><span class="fa fa-plus"></span></button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h4>Expenses Details</h4>
+                                </div>
+                                <br />
+                                <div class="col-lg-12">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in expense.hospitalExpenses">
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ item.description }}</td>
+                                                <td>{{ item.amount }}</td>
+                                                <td><button class="btn btn-danger btn-sm" ng-click="removeExpenses($index)"><span class="fa fa-trash"></span></button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="vat">VAT: </label>
+                                                        <input type="number" class="form-control" ng-model="expense.vat" id="vat" required/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">Paid: </label>
+                                                        <input type="number" class="form-control" ng-model="expense.paid" id="paid" required/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="total">Total: </label>
+                                                        <input type="number" class="form-control" ng-model="expense.total" ng-value="getTotal()" id="total" readonly="readonly" required/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="due">Due: </label>
+                                                        <input type="number" class="form-control" ng-model="expense.due" ng-value="getDue()" id="due" readonly="readonly" required/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <br />
+                                <div class="col-lg-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i ng-if="!isProcessing" class="fa fa-unlock" aria-hidden="true"></i><i ng-if="isProcessing" class="fa fa-spinner fa-spin fa-1x fa-fw"></i> {{createButton}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

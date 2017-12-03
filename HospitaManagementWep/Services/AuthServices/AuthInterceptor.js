@@ -4,7 +4,7 @@ var AuthApp = angular.module('AuthApp', ['LocalStorageModule']);
 
 
 // Global Variable for base path
-AuthApp.constant('serviceBasePath', 'http://localhost:51452/');
+AuthApp.constant('serviceBasePath', 'http://masud.azurewebsites.net');
 
 AuthApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService', function ($q, $injector, $location, localStorageService) {
 
@@ -27,7 +27,8 @@ AuthApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
             $location.path('/home');
         } else if (rejection.status == 401) {
             localStorageService.remove('authorizationData');
-            $location.path('/login');
+            var currentRoute = $location.path();
+            $location.path("/login").search("returnTo", currentRoute);
         }
         return $q.reject(rejection);
     };
@@ -47,9 +48,9 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
 
     authServiceFactory.getAuthInfo = function () {
         
-        var authData = localStorageService.get('authorizationData');
+        var token = localStorageService.get('authorizationData');
         
-        if (authData) {
+        if (token) {
             return true;
         } else
             //throw new NotImplementedError('Unauthenticate');
@@ -58,12 +59,12 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
 
     authServiceFactory.isAuthenticated = function () {
 
-        var authData = localStorageService.get('authorizationData');
+        var token = localStorageService.get('authorizationData');
 
-        if (authData) {
-            return true;
-        } else
-            return false;
+        //if (token) {
+        //    return !jwtHelper.isTokenExpired(token);
+        //} else
+        //    return false;
     }
 
  

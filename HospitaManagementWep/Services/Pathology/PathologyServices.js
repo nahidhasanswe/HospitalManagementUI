@@ -17,5 +17,17 @@
         return $http.get(serviceBasePath + '/api/opd/doctor-data/doctors');
     }
 
+    pathology.savePurchaseIngradiant = function (data) {
+        return $http.post(serviceBasePath + '/api/pathology/laboratory-equipment/purchase', data);
+    }
+
+    pathology.saveLaboratoryEquipment = function (data) {
+        return $http.post(serviceBasePath + '/api/pathology/laboratory-equipment/save', data);
+    }
+
+    pathology.getLaboratoryEquipment = function () {
+        return $http.get(serviceBasePath + '/api/pathology/pathology-data/lab-equipment');
+    }
+
     return pathology;
 });

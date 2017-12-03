@@ -1,0 +1,118 @@
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-lg-3">
+        <span style="display: none">Hospital Management System</span>
+    </div>
+    <div class="col-lg-6">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Payment Receive By Manager</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div name="voucherForm">
+                        <div class="row">
+                            <form name="searchPayment" ng-submit="searhEmployeePayment(Search, searchPayment.$valid)" novalidate>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="customerName" class="control-label">Employee Name:</label>
+                                        <angucomplete id="medicineName"
+                                                      placeholder="Search by Employee Name"
+                                                      pause="400"
+                                                      selected-object="SelectedEmployee(selectedItem)"
+                                                      url="{{serverBasePath}}/api/accounting/installment-receive/username-id/"
+                                                      datafield="results"
+                                                      minlength="1"
+                                                      searchfields="userName"
+                                                      titlefield="userName"
+                                                      inputclass="form-control form-control-small" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="datepicker">Date:</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="date" class="form-control" ng-init="today()" ng-model="Search.date" id="datepicker" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <button type="submit" class="btn btn-success btn-sm" ng-disabled="isProcessing"><i class="fa fa-search"></i> {{searchButton}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div ng-if="searchResult">
+                                <div class="col-lg-12">
+                                    <h3>Payment Details</h3>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="searchId">Total</label>
+                                        <input type="number" ng-model="searchResult.total" class="form-control" placeholder="Patient Id Number" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="searchId">Due</label>
+                                        <input type="number" ng-model="searchResult.due" class="form-control" placeholder="Patient Id Number" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="searchId">Discount</label>
+                                        <input type="number" ng-model="searchResult.discount" class="form-control" placeholder="Patient Id Number" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="form-group">
+                                        <label for="searchId">Received</label>
+                                        <input type="number" ng-model="searchResult.received" class="form-control" placeholder="Patient Id Number" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h3>Pay Amount</h3>
+                                </div>
+                                <form name="payment" ng-submit="paymentReceive(Payment, payment.$valid)" novalidate>
+                                    <div class="col-lg-7">
+                                        <div class="form-group">
+                                            <label for="searchId">Amount</label>
+                                            <input type="number" ng-model="Payment.amount" class="form-control" min="1" placeholder="Patient Id Number" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="form-group">
+                                            <label for="datepicker">Receive Date:</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="date" class="form-control" ng-model="Payment.receivedDate" id="datepicker" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <button type="submit" class="btn btn-success btn-sm" ng-disabled="isSearch"><i class="fa fa-plus" aria-hidden="true"></i> Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <span style="display: none">Hospital Management System</span>
+    </div>
+</div> 

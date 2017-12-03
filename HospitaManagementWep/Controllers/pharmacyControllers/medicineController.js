@@ -146,3 +146,84 @@
         }
     }
 });
+
+
+routerApp.controller('medicinePaymentController', function ($scope, $state, medicinePaymentService, toastr, serviceBasePath, reportCreate) {
+
+    $scope.initButton = function () {
+        $scope.searchButton = 'Search';
+        $scope.paymentButton = 'Payment';
+        $scope.isProcessing = false;
+    }
+
+    $scope.serverBasePath = serviceBasePath;
+
+    $scope.isResult = false;
+
+    $scope.initButton();
+
+    $scope.SelectedPatient = function (selectedPatient) {
+        var info = selectedPatient.originalObject;
+        $scope.searchDate.patientId = info.id;
+
+        $scope.isResult = false;
+
+        $scope.patientInfo = {
+            name: info.name,
+            fatherName: info.fatherName,
+            phone: info.phone
+        }
+
+        $scope.patientPaymentInfo.patientId = info.id;
+
+
+    }
+
+    $scope.patientPaymentInfo = {
+        TransactionDate: new Date(),
+        patientId: '',
+        Total: 0,
+        Discount: 0,
+        Vat: 0,
+        Due: 0,
+        Paid: 0
+    }
+
+    $scope.searchDate = {
+        fromDate: new Date(new Date().getTime() - (30 * 24 * 60 * 60 * 1000)),
+        toDate: new Date(),
+        patientId: ''
+    };
+
+
+    $scope.searchResult = function (patientInfo) {
+        $scope.searchButton = 'Searching...';
+        $scope.isProcessing = true;
+        medicinePaymentService.getPatientData(patientInfo).then(function (response) {
+            $scope.paymentInfo = response.data;
+            $scope.isResult = true;
+            $scope.initButton();
+        }, function (error) {
+            toastr.error(error.data.message);
+            $scope.initButton();
+        })
+    }
+
+    $scope.medicineDuePayment = function (paymentData, valid) {
+        if (valid) {
+            $scope.paymentButton = 'Paymenting...';
+            $scope.isProcessing = true;
+            medicinePaymentService.dueMedicinePayment(paymentData).then(function (response) {
+                swal('Successful', 'Successfully Payment', 'success');
+                $state.reload();
+                reportCreate.IpdEquipmentRequision(response.data);
+            }, function (error) {
+                toastr.error(error.data.message);
+                $scope.initButton();
+            })
+        } else {
+            toastr.error('Provide Proper Information');
+        }
+    }
+   
+});

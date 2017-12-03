@@ -45,5 +45,13 @@ routerApp.factory('ipdService', function ($http, serviceBasePath) {
         return $http.post(serviceBasePath + '/api/ipd/patient-data/discharged-patient', data);
     }
 
+    ipd.getPaymentInfo = function (admissionId) {
+        return $http.get(serviceBasePath + '/api/ipd/ipd-pos-data/admission-data/' + admissionId);
+    }
+
+    ipd.duePayment = function (paymentInfo) {
+        return $http.post(serviceBasePath + '/api/ipd/ipd-pos/pay-indoor-due', paymentInfo);
+    }
+
     return ipd;
 });

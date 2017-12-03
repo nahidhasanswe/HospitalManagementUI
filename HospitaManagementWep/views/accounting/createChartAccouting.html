@@ -1,0 +1,137 @@
+﻿<div class="row" ng-init="initButton()">
+    <div class="col-lg-4" ng-if="!isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Save Chart Of Accounting</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="saveChartOfAccouting(chartOAobject)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="patientId">MIS Name: </label>
+                                    <angucomplete id="patientId"
+                                                  placeholder="Search by MIS Name"
+                                                  pause="400"
+                                                  selected-object="selectedMIS(selectedItem)"
+                                                  url="{{serverBasePath}}/api/accounting/mis-data/mis/"
+                                                  datafield="results"
+                                                  minlength="1"
+                                                  searchfields="name"
+                                                  titlefield="name"
+                                                  inputclass="form-control form-control-small" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="patientId">Leger Name: </label>
+                                    <angucomplete id="patientId"
+                                                  placeholder="Search by Leger Name"
+                                                  pause="400"
+                                                  selected-object="selectedLeger(selectedItem)"
+                                                  url="{{serverBasePath}}/api/accounting/ledger-data/ledger-name-id-by-name/"
+                                                  datafield="results"
+                                                  minlength="1"
+                                                  searchfields="name"
+                                                  titlefield="name"
+                                                  inputclass="form-control form-control-small" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{createButton}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4" ng-if="isUpdatable">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Update Chart Of Accounting Information</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form name="formdata" ng-submit="updatedChartOfAccoutingInformation(updateChartOfAccounting)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">MIS Name: </label>
+                                    <input type="text" id="name" ng-model="updateChartOfAccounting.misName" class="form-control" placeholder="Patient Name" readonly />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="patientId">Leger Name Search and Select: </label>
+                                    <angucomplete id="patientId"
+                                                  placeholder="Search by Leger Name"
+                                                  pause="400"
+                                                  selected-object="selectedLegerupdate(selectedItem)"
+                                                  url="{{serverBasePath}}/api/accounting/ledger-data/ledger-name-id-by-name/"
+                                                  datafield="results"
+                                                  minlength="1"
+                                                  searchfields="name"
+                                                  titlefield="name"
+                                                  inputclass="form-control form-control-small" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="name">Leger Name: </label>
+                                    <input type="text" id="name" ng-model="updateChartOfAccounting.chartOfAccounting" class="form-control" placeholder="Patient Name" readonly />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" id="btn" class="btn btn-primary btn-block" ng-disabled="isProcessing"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{updateButton}}</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="button" class="btn btn-danger btn-block" ng-click="cancelUpdate()" ng-disabled="isProcessing"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4 class="text-center text-capitalize text-bold text-default">Chart Of Accounting List</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table datatable="ng" class="table table-responsive-wide table-bordered table-hover row-border hover">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Id</th>
+                                <th>MIS Name</th>
+                                <th>Ledger Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="accounting in chartOfAccouting">
+                                <td>{{$index + 1}}</td>
+                                <td>{{accounting.id}}</td>
+                                <td>{{accounting.misName}}</td>
+                                <td>{{accounting.chartOfAccounting}}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" ng-click="UpdateChartOfAccounting(accounting)" type="submit"><span class="fa fa-pencil-square-o"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

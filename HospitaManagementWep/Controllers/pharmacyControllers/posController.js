@@ -1,4 +1,4 @@
-﻿routerApp.controller('posController', function ($scope, $location, medicineDataService, posDataService, posService, distributorService, toastr) {
+﻿routerApp.controller('posController', function ($scope, $location, medicineDataService, posDataService, posService, distributorService, toastr, reportCreate) {
 
     $scope.initButton = function () {
         $scope.createButton = 'Submit';
@@ -174,7 +174,8 @@
         $scope.model.vat = $scope.vat;
         $scope.model.due = $scope.due;
         posService.purchaseMedicine($scope.model).then(function(response) {
-                toastr.success(response.data);
+            toastr.success('successfully Medicine Purchase');
+            reportCreate.BuyMedicine(respose.data)
             },
             function(err) {
                 toastr.error(err.data.message);
@@ -277,7 +278,8 @@
 
             posService.saleMedicine($scope.salesMedicine).then(function (response) {
                 $scope.initButton();
-                toastr.success(response.data);
+                toastr.success('Successfull');
+                reportCreate.SaleMedicine(response.data);
             }, function (error) {
                 $scope.initButton();
                 toastr.error(error.data);

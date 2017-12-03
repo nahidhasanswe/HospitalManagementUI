@@ -1,31 +1,64 @@
-﻿routerApp.controller('addExpensesController', function ($scope, $location, administratorService, toastr, $state, $uibModal) {
+﻿routerApp.controller('addExpensesController', function ($scope, expenseService, toastr, $state, $uibModal, reportCreate) {
 
     $scope.initButton = function () {
-        $scope.createButton = 'Save';
+        $scope.createButton = 'Save Expenses';
         $scope.isProcessing = false;
-        $scope.updateButton = 'Update';
-        $scope.isUpdatable = false;
     }
 
-    $scope.dataLoad = function () {
-        administratorService.getSpecialist().then(function (response) {
-            $scope.specialistItems = response.data;
-        });
-
-        administratorService.getDoctorsList().then(function (response) {
-            $scope.doctorList = response.data;
-        });
+    $scope.expense = {
+        transactionDate: new Date(),
+        total: 0,
+        due: 0,
+        paid: 0,
+        vat: 0,
+        hospitalExpenses: []
     }
 
-    $scope.dataLoad();
+    $scope.singleExpense = {
+        description: '',
+        amount: 0
+    };
 
-    $scope.saveDoctor = function (data, valid) {
+    $scope.addExpenses = function (data) {
+        if (data.description === '' || data.amount <= 0) {
+            toastr.error('Provide Required information');
+        }
+        else {
+            $scope.expense.hospitalExpenses.push(data);
+            $scope.singleExpense = {
+                description: '',
+                amount: 0
+            };
+        }
+    }
+
+    $scope.removeExpenses = function (index) {
+        $scope.expense.hospitalExpenses.splice(index , 1);
+    }
+
+    $scope.getTotal = function () {
+        var sum = 0;
+        angular.forEach($scope.expense.hospitalExpenses, function (item) {
+            sum = sum + item.amount;
+        })
+        return sum + $scope.expense.vat;
+    }
+
+    $scope.getDue = function () {
+        var total = $scope.getTotal();
+        return total - $scope.expense.paid;
+    }
+
+    $scope.SaveExpenses = function (data, valid) {
         if (valid) {
             $scope.createButton = 'Saving....';
             $scope.isProcessing = true;
-            administratorService.saveDoctor(data).then(function (response) {
-                swal('Success', 'Successfully added Doctor', 'success');
+            data.total = $scope.getTotal();
+            data.due = $scope.getDue();
+            expenseService.saveExpenses(data).then(function (response) {
+                swal('Success', 'Successfully added Expenses' + response.data, 'success');
                 $state.reload();
+               // reportCreate.SaveExpenses(response.data);
             }, function (error) {
                 $scope.initButton();
                 toastr.error('Internal Server Problem');
@@ -33,108 +66,52 @@
         } else {
             toastr.error('Please provide required information');
         }
-    }
-
-    $scope.updateDoctorInformation = function (data, valid) {
-        if (valid) {
-            $scope.updateButton = 'Updating....';
-            $scope.isProcessing = true;
-            administratorService.saveDoctor(data).then(function (response) {
-                swal('Success', 'Successfully updated Doctor Information', 'success');
-                $state.reload();
-            }, function (error) {
-                $scope.initButton();
-                toastr.error('Internal Server Problem');
-            })
-        } else {
-            toastr.error('Please provide required information');
-        }
-    }
-
-    $scope.UpdateDoctorInfo = function (data) {
-        $scope.updateDoctor = {};
-        angular.copy(data, $scope.updateDoctor)
-
-        $scope.isUpdatable = true;
-    }
-
-    $scope.cancelUpdate = function () {
-        $scope.isUpdatable = false;
-    }
-
-    $scope.ViewDoctorInformation = function (data) {
-        $scope.doctorInfo = {};
-        angular.copy(data, $scope.doctorInfo);
-
-        var modalInstance = $uibModal.open({
-            templateUrl: 'views/Administrator/doctorInfoModal.html',
-            controller: 'doctorsMngController',
-            scope: $scope,
-            backdrop: 'static',
-            backdropClass: 'ModalBackdrop',
-            size: 'md',
-        });
     }
 
 });
 
-routerApp.controller('viewExpensesController', function ($scope, $location, administratorService, toastr, $state) {
+routerApp.controller('viewExpensesController', function ($scope, expenseService, toastr, $state, reportCreate, $filter) {
 
     $scope.initButton = function () {
-        $scope.createButton = 'Save';
+        $scope.createButton = 'Search';
         $scope.isProcessing = false;
-        $scope.isUpdatable = false;
-        $scope.updateButton = 'Update';
     }
 
-    $scope.dataLoad = function () {
-        administratorService.getSpecialist().then(function (response) {
-            $scope.specialistItems = response.data;
-        });
-    }
+    $scope.isResult = false;
 
-    $scope.dataLoad();
-
-    $scope.saveSpecialistName = function (data, valid) {
+    $scope.getExpenseList = function (data, valid) {
         if (valid) {
-            $scope.createButton = 'saving....';
+            $scope.createButton = 'Searching....';
             $scope.isProcessing = true;
-            administratorService.saveSpecialistName(data).then(function (response) {
-                swal('Successful', 'The specialist name is successfully added', 'success');
+            expenseService.viewExpenses(data).then(function (response) {
+                $scope.expenseList = response.data;
+                makeDateFormat(data);
+                $scope.isResult = true;
                 $scope.initButton();
-                $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error('Internal Server Problem');
             })
         } else {
             toastr.error('Please provide required information');
         }
     }
 
-    $scope.UpdateSpecialist = function (item) {
-        $scope.updateSpecialist = {};
-        angular.copy(item, $scope.updateSpecialist);
-        $scope.isUpdatable = true;
+    $scope.searchDate = {
+        fromDate: new Date(new Date().getTime() - (30 * 24 * 60 * 60 * 1000)),
+        toDate: new Date()
+    };
+
+    function makeDateFormat(data) {
+        var fromDate = $filter('date')(data.fromDate, 'yyyy-MM-dd');
+        var toDate = $filter('date')(data.toDate, 'yyyy-MM-dd');
+
+        $scope.urlParam = '?fromDate=' + fromDate.toString() + 'toDtae=' + toDate.toString();
+
+        console.log($scope.urlParam);
     }
 
-    $scope.updateSpecialistName = function (data, valid) {
-        if (valid) {
-            $scope.updateButton = 'Updating....';
-            $scope.isProcessing = true;
-            administratorService.saveSpecialistName(data).then(function (response) {
-                swal('Successful', 'The specialist name is successfully updated', 'success');
-                $state.reload();
-            }, function (error) {
-                $scope.initButton();
-                toastr.error(error.data);
-            })
-        } else {
-            toastr.error('Please provide required information');
-        }
-    }
-
-    $scope.cancel = function () {
-        $scope.isUpdatable = false;
+    $scope.printExpenses = function () {
+        reportCreate.ViewExpenses($scope.urlParam);
     }
 });
