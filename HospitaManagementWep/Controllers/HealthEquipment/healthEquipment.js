@@ -28,7 +28,7 @@
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -44,7 +44,7 @@
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');

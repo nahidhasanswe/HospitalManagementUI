@@ -23,7 +23,7 @@
                 $scope.groups = response.data;
             },
             function(error) {
-                swal('Error', error.error_description, 'error');
+                swal('Error', error.data.message, 'error');
             });
     }
 
@@ -34,7 +34,7 @@
                 $scope.nature = response.data;
             },
             function (error) {
-                swal('Error', error.error_description, 'error');
+                swal('Error', error.data.message, 'error');
             });
     }
     $scope.getNature();
@@ -56,7 +56,7 @@
                     $scope.model = null;
                 },
                 function(error) {
-                    swal('Error', error.error_description, 'error');
+                    swal('Error', error.data.message, 'error');
                     $scope.initButton();
                 });
         }
@@ -134,7 +134,7 @@ routerApp.controller('chartAccountingController', function ($scope, $uibModal, a
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -150,7 +150,7 @@ routerApp.controller('chartAccountingController', function ($scope, $uibModal, a
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -198,7 +198,7 @@ routerApp.controller('misController', function ($scope, $uibModal, toastr, $stat
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -214,7 +214,7 @@ routerApp.controller('misController', function ($scope, $uibModal, toastr, $stat
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');

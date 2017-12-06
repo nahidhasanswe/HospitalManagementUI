@@ -22,7 +22,7 @@
         opdService.getSpecialists().then(function (response) {
             $scope.Specialists = response.data;
         }, function (error) {
-            toastr.error('Internal Server Problem');
+            toastr.error(error.data.message);
         })
     }
 
@@ -32,7 +32,7 @@
             opdService.getSpecialistDoctor(id).then(function (result) {
                 $scope.doctorList = result.data;
             }, function (error) {
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             $scope.doctorList = [];
@@ -87,7 +87,7 @@
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             });
         } else {
             toastr.error('Please provide all required information');
@@ -274,7 +274,7 @@ routerApp.controller('opdTestReportDeliveryController', function ($scope, $state
                 $scope.isResult = true;
                 $scope.initButton();
             }, function (error) {
-                toastr.error('No Result Found');
+                toastr.error(error.data.message);
                 $scope.initButton();
             })
         } else {
@@ -294,7 +294,7 @@ routerApp.controller('opdTestReportDeliveryController', function ($scope, $state
                 toastr.success('Successfully delivery repoort status updated');
                 $state.reload();
             }, function (error) {
-                toastr.error('Something is wrong');
+                toastr.error(error.data.message);
                 console.log(error);
                 $scope.initButton();
             })
@@ -346,17 +346,18 @@ routerApp.controller('opdAppointmentController', function ($scope, $state, opdSe
                 $scope.initButton();
                 $scope.appointmentList = response.data;
                 $scope.isResult = true;
+                $scope.appoinmentData = data;
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             });
         } else {
             toastr.info('Please provide all required information');
         }
     }
 
-    $scope.generateReport = function () {
-        reportCreate.AppointmentList(1);
+    $scope.generateReport = function (data) {
+        reportCreate.AppointmentList(data.DoctorId, data.AppointmentDate);
     }
 });
 
@@ -407,7 +408,7 @@ routerApp.controller('opdPaymentReceiveController', function ($scope, $state, op
                 reportCreate.OpdPaymentReceive(response.data);
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             $scope.initButton();

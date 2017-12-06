@@ -1,4 +1,4 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'smart-table', 'AuthApp', 'ui.bootstrap', 'ui.bootstrap.modal', 'ngMessages', 'chieffancypants.loadingBar', 'ngAnimate', 'ngTouch', 'angucomplete-alt', 'toastr', 'datatables', 'angucomplete']);
+﻿var routerApp = angular.module('routerApp', ['ui.router', 'smart-table', 'AuthApp', 'ui.bootstrap', 'ui.bootstrap.modal', 'ngMessages', 'chieffancypants.loadingBar', 'ngAnimate', 'ngTouch', 'angucomplete-alt', 'toastr', 'datatables', 'angucomplete','angular-jwt']);
 
 routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -436,8 +436,11 @@ routerApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider
 
             $timeout(function () {
                 var currentRoute = $location.path();
-
-                $location.path("/login").search("returnTo", currentRoute);
+                if (currentRoute !== '/login') {
+                    $location.path("/login").search("returnTo", currentRoute);
+                } else {
+                    $location.path("/login");
+                }
             })
               return $q.reject()
         }
@@ -462,8 +465,8 @@ routerApp.config(function (cfpLoadingBarProvider, toastrConfig) {
 
 /* Global Constant Domain Name for API */
 //'http://masud.azurewebsites.net'
-// routerApp.constant('serviceBasePath','http://hms.a2zmanagementsystem.com');
-routerApp.constant('serviceBasePath','http://masud.azurewebsites.net');
+routerApp.constant('serviceBasePath','http://hms.a2zmanagementsystem.com');
+//routerApp.constant('serviceBasePath','http://masud.azurewebsites.net');
 
 //routerApp.run(function ($rootScope, $localtion) {
 //    $rootScope.location = $localtion;

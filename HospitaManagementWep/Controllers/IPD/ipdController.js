@@ -41,6 +41,8 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, $
                 id: selectedObject.id,
                 name: selectedObject.name,
                 fatherName: selectedObject.fatherName,
+                sex: selectedObject.sex,
+                age: selectedObject.age,
                 villOrHouseAddress: selectedObject.villOrHouseAddress,
                 postOffice: selectedObject.postOffice,
                 postCode: selectedObject.postCode,
@@ -68,7 +70,9 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, $
         $scope.admission = {
             id: '',
             name :'',
-            fatherName :'',
+            fatherName: '',
+            sex: '',
+            age: '',
             villOrHouseAddress :'',
             postOffice : '',
             postCode : '',
@@ -123,7 +127,7 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, $
                 reportCreate.IpdPatientAdmission(response.data);
             }, function(error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             });
         }else {
             toastr.info('Please provide all required information');
@@ -142,7 +146,7 @@ routerApp.controller('ipdPatientListController', function ($scope, $location,ipd
         ipdService.getIPDPatientList().then(function(response){
             $scope.patientList = response.data;
         }, function(error){
-            toastr.error('Internal Server Problem');
+            toastr.error(error.data.message);
         }) 
     }    
 });
@@ -533,7 +537,7 @@ routerApp.controller('ipdDischargePatientListController', function ($scope, $loc
                 $scope.initButton();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -618,7 +622,7 @@ routerApp.controller('ipdPaymentController', function ($scope, ipdService, $stat
                 $scope.initButton();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');

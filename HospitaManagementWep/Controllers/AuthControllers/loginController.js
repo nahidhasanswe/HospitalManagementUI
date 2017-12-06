@@ -2,7 +2,7 @@
 
     $scope.getAut = function()
     {
-        var a = authService.isAuthenticated();
+        var a = authService.getAuthInfo();
         if (a == true) {
             $state.go('home');
         }
@@ -57,15 +57,13 @@
                     $location.search({});
                     $location.path(returnUrl && returnUrl || "/");
                 } else {
-                    $window.location.reload();
                     $state.go('home');
+                    $window.location.reload();
                 }
 
             },
                 function (error) {
-                    console.log(error);
                     swal('Error', error.error_description, 'error');
-                    console.log(error);
                     $scope.buttonText();
                 });
         } else {

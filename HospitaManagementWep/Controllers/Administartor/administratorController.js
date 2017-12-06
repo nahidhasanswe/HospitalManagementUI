@@ -28,7 +28,7 @@
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -44,7 +44,7 @@
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -71,7 +71,6 @@
             controller: 'doctorsMngController',
             scope: $scope,
             backdrop: 'static',
-            backdropClass: 'ModalBackdrop',
             size: 'md',
         });
     }
@@ -105,7 +104,7 @@ routerApp.controller('specialistMngController', function ($scope, $location, adm
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -127,7 +126,7 @@ routerApp.controller('specialistMngController', function ($scope, $location, adm
                 $state.reload();
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -186,7 +185,7 @@ routerApp.controller('paymentReceiveController', function ($scope, $location, ad
                     }
                 }, function (error) {
                     $scope.initButton();
-                    toastr.error(error.data);
+                    toastr.error(error.data.message);
                 })
             }
             else {
@@ -244,7 +243,7 @@ routerApp.controller('auditReportController', function ($scope, $location, admin
                 $scope.initButton();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');

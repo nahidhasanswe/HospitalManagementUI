@@ -273,8 +273,8 @@
             $scope.salesMedicine.transactionDate = $scope.transactionDate;            
             $scope.salesMedicine.discount = $scope.discount;
             $scope.salesMedicine.paid = $scope.paid;
-            $scope.salesMedicine.due = $scope.getTotal();
-            $scope.salesMedicine.total = $scope.getDue();
+            $scope.salesMedicine.total = $scope.getTotal();
+            $scope.salesMedicine.due = $scope.getDue();
 
             posService.saleMedicine($scope.salesMedicine).then(function (response) {
                 $scope.initButton();

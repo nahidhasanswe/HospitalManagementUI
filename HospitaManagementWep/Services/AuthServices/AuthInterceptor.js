@@ -1,10 +1,10 @@
 ﻿'use strict';
 
-var AuthApp = angular.module('AuthApp', ['LocalStorageModule']);
+var AuthApp = angular.module('AuthApp', ['LocalStorageModule','angular-jwt']);
 
 
 // Global Variable for base path
-AuthApp.constant('serviceBasePath', 'http://masud.azurewebsites.net');
+AuthApp.constant('serviceBasePath', 'http://hms.a2zmanagementsystem.com');
 
 AuthApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'localStorageService', function ($q, $injector, $location, localStorageService) {
 
@@ -38,7 +38,7 @@ AuthApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
 }]);
 
 
-AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBasePath', function ($http, $q, localStorageService, serviceBasePath) {
+AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBasePath', function ($http, $q, localStorageService, serviceBasePath, jwtHelper) {
     var authServiceFactory = {};
 
     var _authentication = {
@@ -59,10 +59,13 @@ AuthApp.factory('authService', ['$http', '$q', 'localStorageService', 'serviceBa
 
     authServiceFactory.isAuthenticated = function () {
 
-        var token = localStorageService.get('authorizationData');
+        //var auth = localStorageService.get('authorizationData');
 
-        //if (token) {
-        //    return !jwtHelper.isTokenExpired(token);
+        //console.log(auth.token);
+
+        //if (auth) {
+        //    console.log(jwtHelper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ'))
+        //    return !jwtHelper.isTokenExpired(auth.token);
         //} else
         //    return false;
     }

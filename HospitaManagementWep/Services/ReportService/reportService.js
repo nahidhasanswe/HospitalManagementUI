@@ -18,7 +18,12 @@
                 'speedOut': 700,
                 autoSize: true,
                 closeClick: false,
-                'href': completeUrl
+                'href': url,
+                helpers: {
+                    overlay: {
+                        closeClick: false
+                    } // prevents closing when clicking OUTSIDE fancybox
+                }
             }
         );
     }
@@ -26,21 +31,23 @@
     return report;
 });
 
-routerApp.factory('reportCreate', function (serviceBasePath, reportService) {
+routerApp.factory('reportCreate', function (serviceBasePath, reportService, $filter) {
     var report = {};
 
-    report.AppointmentList = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+    report.AppointmentList = function (doctorId, date) {
+        //var appoinmentDate = $filter('date')(date, 'yyyy-MM-dd');
+        var appoinmentDate = moment(date).format('YYYY-MM-DD');
+        var url = serviceBasePath + '/api/report/patient-report/appoint?date=' + appoinmentDate + '&doctorId=' + doctorId;
         reportService.viewReport(url);
     }
 
     report.OpdPathologyTestReport = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/diagnosis-test-sale/' + invoiceId;
         reportService.viewReport(url);
     }
 
     report.OpdPaymentReceive = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/diagnosis-test-sale/' + invoiceId;
         reportService.viewReport(url);
     }
 
@@ -50,17 +57,17 @@ routerApp.factory('reportCreate', function (serviceBasePath, reportService) {
     }
 
     report.IpdPathologyRequisition = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/diagnosis-test-requisition/' + invoiceId;
         reportService.viewReport(url);
     }
 
     report.IpdMedicineRequisition = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/medicine-requisition/' + invoiceId;
         reportService.viewReport(url);
     }
 
     report.IpdEquipmentRequision = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/health-equipment-requisition/' + invoiceId;
         reportService.viewReport(url);
     }
 
@@ -70,7 +77,7 @@ routerApp.factory('reportCreate', function (serviceBasePath, reportService) {
     }
 
     report.SaleMedicine = function (invoiceId) {
-        var url = serviceBasePath + '' + invoiceId;
+        var url = serviceBasePath + '/api/report/pos-report/medicine-sale/' + invoiceId;
         reportService.viewReport(url);
     }
 

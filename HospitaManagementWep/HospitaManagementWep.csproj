@@ -258,6 +258,7 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-jwt.js" />
     <Content Include="Scripts\angular-jwt\angular-jwt.js" />
     <Content Include="Scripts\angular-jwt\angular-jwt.min.js" />
     <Content Include="Scripts\angular-jwt\angular.min.js" />

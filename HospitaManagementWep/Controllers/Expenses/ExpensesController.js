@@ -61,7 +61,7 @@
                // reportCreate.SaveExpenses(response.data);
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
@@ -90,7 +90,7 @@ routerApp.controller('viewExpensesController', function ($scope, expenseService,
                 $scope.initButton();
             }, function (error) {
                 $scope.initButton();
-                toastr.error('Internal Server Problem');
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please provide required information');
