@@ -1,17 +1,88 @@
-﻿<div data-ng-controller="homeController" ng-init="getAuthorization();">
+﻿<div style="margin: 10px" ng-init="getAuthorization()">
+    <div class="row">
+        <div class="col-lg-12">
+            <span class="dashboard-title">{{today|date}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-1">
+                        <i class="fa fa-ambulance md-card-icon"></i>
+                         <span class="md-card-title-text"> Admitted Patient</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#7b1fa2" class="md-card-content-text">{{dashboard.admittedPatient}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-6">
+                        <i class="fa fa-wheelchair md-card-icon"></i>
+                        <span class="md-card-title-text">Discharged Patient</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#ac5006" class="md-card-content-text">{{dashboard.dischargedPatient}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-2">
+                        <i class="fa fa-medkit md-card-icon"></i>
+                        <span class="md-card-title-text">Medicine Sale</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#1b0eca" class="md-card-content-text"> <b>৳ {{dashboard.medicineSale}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-3">
+                        <i class="fa fa-stethoscope md-card-icon"></i>
+                        <span class="md-card-title-text">Equipment Sale</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#01752e" class="md-card-content-text"> <b>৳ {{dashboard.equipmentSale}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-4">
+                        <i class="fa fa-heartbeat md-card-icon"></i>
+                        <span class="md-card-title-text">Diagonsis Sale</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#0478e4" class="md-card-content-text"> <b>৳ {{dashboard.testSale}}</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="card-holder">
+                <div>
+                    <div class="md-card-title style-5">
+                        <i class="fa fa-money md-card-icon"></i>
+                        <span class="md-card-title-text">Expenses</span>
+                    </div>
+                    <div class="md-card-content">
+                        <span style="color:#a00464" class="md-card-content-text">৳ {{dashboard.expenses}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-   
-
-
-
-<div class="jumbotron text-center">
-    <h1>The Homey Page</h1>
-    <p>This page demonstrates <span class="text-danger">nested</span> views.</p>  
-
-    <a ui-sref=".list" class="btn btn-primary">List</a>
-    <a ui-sref=".paragraph" class="btn btn-danger">Paragraph</a>
-</div>
-
-<div ui-view></div>
-
+    </div>
 </div>

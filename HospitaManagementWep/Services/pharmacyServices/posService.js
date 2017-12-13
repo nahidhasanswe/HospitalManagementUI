@@ -6,10 +6,6 @@
     }
 
     pos.purchaseMedicine = function (invoice) {
-        return $http.post(serviceBasePath + '/api/pharmacy/pos/sale-medicine', invoice);
-    }
-
-    pos.purchaseMedicine = function (invoice) {
         return $http.post(serviceBasePath + '/api/pharmacy/pos/purchase-medicine', invoice);
     }
 

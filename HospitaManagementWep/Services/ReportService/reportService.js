@@ -51,6 +51,11 @@ routerApp.factory('reportCreate', function (serviceBasePath, reportService, $fil
         reportService.viewReport(url);
     }
 
+    report.IPDPaymentReceive = function (admissionId) {
+        var url = serviceBasePath + '/api/report/patient-report/admission/' + admissionId;
+        reportService.viewReport(url);
+    }
+
     report.IpdPatientAdmission = function (invoiceId) {
         var url = serviceBasePath + '' + invoiceId;
         reportService.viewReport(url);
@@ -87,7 +92,7 @@ routerApp.factory('reportCreate', function (serviceBasePath, reportService, $fil
     }
 
     report.SaveExpenses = function (invoiceId) {
-        var url = serviceBasePath + '/api/expense/expense-data/view-expens/' + invoiceId;
+        var url = serviceBasePath + '/api/report/expense-report/save-expense/' + invoiceId;
         reportService.viewReport(url);
     }
 
@@ -107,4 +112,14 @@ routerApp.factory('reportCreate', function (serviceBasePath, reportService, $fil
     }
 
     return report;
+});
+
+routerApp.factory('dashboardService', function (serviceBasePath, $http) {
+    var service = {};
+
+    service.getDashboardInfo = function () {
+        return $http.get(serviceBasePath + '/api/dashboard/present-condition');
+    }
+
+    return service;
 });

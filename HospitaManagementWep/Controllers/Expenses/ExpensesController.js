@@ -58,7 +58,7 @@
             expenseService.saveExpenses(data).then(function (response) {
                 swal('Success', 'Successfully added Expenses' + response.data, 'success');
                 $state.reload();
-               // reportCreate.SaveExpenses(response.data);
+                reportCreate.SaveExpenses(response.data);
             }, function (error) {
                 $scope.initButton();
                 toastr.error(error.data.message);
@@ -106,9 +106,7 @@ routerApp.controller('viewExpensesController', function ($scope, expenseService,
         var fromDate = $filter('date')(data.fromDate, 'yyyy-MM-dd');
         var toDate = $filter('date')(data.toDate, 'yyyy-MM-dd');
 
-        $scope.urlParam = '?fromDate=' + fromDate.toString() + 'toDtae=' + toDate.toString();
-
-        console.log($scope.urlParam);
+        $scope.urlParam = '?fromDate=' + fromDate.toString() + '&toDate=' + toDate.toString();
     }
 
     $scope.printExpenses = function () {

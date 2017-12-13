@@ -17,7 +17,7 @@
                 $scope.groups = response.data;
             },
             function (error) {
-                swal('Error', error.error_description, 'error');
+                swal('Error', error.data.message, 'error');
             });
     }
 
@@ -27,7 +27,7 @@
                 $scope.balanceType = response.data;
             },
             function (error) {
-                swal('Error', error.error_description, 'error');
+                swal('Error', error.data.message, 'error');
             });
     }
     $scope.getBalanceType();
@@ -65,7 +65,7 @@
                     $scope.getLedgers();
                 },
                 function(error) {
-                    swal('Error', error.error_description, 'error');
+                    swal('Error', error.data.message, 'error');
                     $scope.initButton();
                 });
         }

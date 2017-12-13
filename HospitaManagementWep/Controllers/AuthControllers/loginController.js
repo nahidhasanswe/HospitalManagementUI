@@ -81,7 +81,7 @@
                 $window.location.reload();
             },
                 function (error) {
-                    swal('Error', error.error_description, 'error');
+                    swal('Error', error.data.message, 'error');
                     $scope.buttonText();
                 });
         } else {

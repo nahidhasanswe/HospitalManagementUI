@@ -1,9 +1,15 @@
-﻿routerApp.controller('homeController', function ($scope, $uibModal, authService, $location, rolesFactory, $state) {
+﻿routerApp.controller('homeController', function ($scope, $uibModal, authService, $location, rolesFactory, $state, dashboardService) {
 
     $scope.initialize = function () {
         $scope.changeButton = 'Recover Password';
         $scope.isProcessing = false;
     }
+
+    $scope.today = new Date();
+
+    dashboardService.getDashboardInfo().then(function (response) {
+        $scope.dashboard = response.data;
+    })
 
     $scope.getAuthorization = function () {
         if (authService.getAuthInfo())

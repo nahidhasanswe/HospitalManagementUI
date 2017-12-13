@@ -1,4 +1,4 @@
-﻿routerApp.controller('posController', function ($scope, $location, medicineDataService, posDataService, posService, distributorService, toastr, reportCreate) {
+﻿routerApp.controller('posController', function ($scope, $location, medicineDataService, posDataService, posService, distributorService, toastr, reportCreate, $state) {
 
     $scope.initButton = function () {
         $scope.createButton = 'Submit';
@@ -122,7 +122,7 @@
     var totals = 0;
     var dues = 0;
     $scope.add = function() {
-        if ($scope.medicineId != '' && $scope.quantity > 0 && $scope.price > 0) {
+        if ($scope.medicineId !== '' && $scope.quantity > 0 && $scope.price > 0) {
             $scope.purchase = {
                 medicineId: $scope.medicineId,
                 quantity: $scope.quantity,
@@ -158,7 +158,7 @@
     }
 
     $scope.insertPurchase = function () { 
-        if ($scope.supplierId == undefined) {
+        if ($scope.supplierId === undefined) {
             swal('warning', 'Please enter supplier info','warning');
             return false;
         }
@@ -263,28 +263,25 @@
 
     $scope.saveSaleMedicine = function () {
 
-        if ($scope.salesMedicine.customerName === '') {
-            toastr.error('Provide required Information');
-        } else {
-            $scope.createButton = 'Submitting.....';
-            $scope.isProcessing = true;
+        $scope.createButton = 'Submitting.....';
+        $scope.isProcessing = true;
 
-            $scope.salesMedicine.vat = $scope.vat;
-            $scope.salesMedicine.transactionDate = $scope.transactionDate;            
-            $scope.salesMedicine.discount = $scope.discount;
-            $scope.salesMedicine.paid = $scope.paid;
-            $scope.salesMedicine.total = $scope.getTotal();
-            $scope.salesMedicine.due = $scope.getDue();
+        $scope.salesMedicine.vat = $scope.vat;
+        $scope.salesMedicine.transactionDate = $scope.transactionDate;
+        $scope.salesMedicine.discount = $scope.discount;
+        $scope.salesMedicine.paid = $scope.paid;
+        $scope.salesMedicine.total = $scope.getTotal();
+        $scope.salesMedicine.due = $scope.getDue();
 
-            posService.saleMedicine($scope.salesMedicine).then(function (response) {
-                $scope.initButton();
-                toastr.success('Successfull');
-                reportCreate.SaleMedicine(response.data);
-            }, function (error) {
-                $scope.initButton();
-                toastr.error(error.data);
-            })
-        }
+        posService.saleMedicine($scope.salesMedicine).then(function (response) {
+            $scope.initButton();
+            toastr.success('Successfull');
+            $state.reload();
+            reportCreate.SaleMedicine(response.data);
+        }, function (error) {
+            $scope.initButton();
+            toastr.error(error.data);
+        })
     }
 
 

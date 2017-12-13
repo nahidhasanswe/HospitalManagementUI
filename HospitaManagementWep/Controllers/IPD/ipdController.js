@@ -97,12 +97,13 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, $
         getAgentList();
     }
 
+
     $scope.getTotal = function() {
-       return $scope.admission.AdmissionFee + $scope.admission.ContractAmount + $scope.admission.Vat - $scope.admission.discount;
+       return $scope.admission.AdmissionFee + $scope.admission.ContractAmount + $scope.admission.Vat;
     }
 
     $scope.getDue = function() {
-        return $scope.getTotal() - $scope.admission.Paid;
+        return $scope.getTotal() - $scope.admission.Paid - $scope.admission.discount;
     }
 
     $scope.afterSelectedDoctor = function (selected) {
@@ -120,11 +121,11 @@ routerApp.controller('ipdController', function ($scope, $location, ipdService, $
             data.total = $scope.getTotal();
             data.due = $scope.getDue();
             ipdService.admitPatient(data).then(function(response) {
-                swal('Successful',response.data,'success');
+                swal('Successful','Patient Admitted Successfully','success');
                 //$scope.initButton();
                 //$scope.initialObject();
                 $state.reload();
-                reportCreate.IpdPatientAdmission(response.data);
+                reportCreate.IPDPaymentReceive(response.data);
             }, function(error) {
                 $scope.initButton();
                 toastr.error(error.data.message);
@@ -197,7 +198,7 @@ routerApp.controller('patientDischargeController', function ($scope, $location, 
                 //$scope.patient = null;
                 //$scope.searchId = '';
                 $state.reload();
-                reportCreate.IpdPatientDischarge(response.data);
+                reportCreate.IPDPaymentReceive(response.data);
             }, function (error) {
                 toastr.error(error.data.message);
                 $scope.initial();
@@ -403,6 +404,8 @@ routerApp.controller('pathologyRequisitionController', function ($scope, $locati
         } else {
             $scope.submitButton = 'Submitting....';
             $scope.isProcessing = true;
+            data.total = $scope.getTotal();
+            data.due = $scope.getDue();
             ipdService.addPathologyRequisition(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
@@ -508,6 +511,8 @@ routerApp.controller('healthEquipmentRequisitionController', function ($scope, $
         } else {
             $scope.submitButton = 'Submitting....';
             $scope.isProcessing = true;
+            data.total = $scope.getTotal();
+            data.due = $scope.getDue();
             ipdService.addEquipmentRequisition(data).then(function (response) {
                 swal('Successful', 'Successfully added !!', 'success');
                 $state.reload();
@@ -589,6 +594,8 @@ routerApp.controller('ipdPaymentController', function ($scope, ipdService, $stat
         $scope.isProcessing = true;
         ipdService.getPaymentInfo(admissionId).then(function (response) {
             $scope.patientPaymentInfo = response.data;
+            $scope.paymentInfo.patientId = $scope.info.id;
+            $scope.paymentInfo.admissionId = $scope.info.admissionId;
             $scope.isResult = true;
             $scope.initButton();
         }, function (error) {
@@ -609,37 +616,20 @@ routerApp.controller('ipdPaymentController', function ($scope, ipdService, $stat
 
     $scope.serverBasePath = serviceBasePath;
 
-    $scope.getPatientList = function (data, valid) {
-        if (valid) {
-            $scope.createButton = 'Searching....';
-            $scope.isProcessing = true;
-            ipdService.getDischargePatientList(data).then(function (response) {
-                $scope.patientList = response.data;
-
-                $scope.paymentInfo.patientId = $scope.info.id;
-                $scope.paymentInfo.admissionId = $scope.info.admissionId;
-
-                $scope.initButton();
-            }, function (error) {
-                $scope.initButton();
-                toastr.error(error.data.message);
-            })
-        } else {
-            toastr.error('Please provide required information');
-        }
-    }
-
     $scope.ipdPayment = function (paymentData, valid) {
         if (valid) {
             $scope.paymentButton = 'Payment.....';
             $scope.isProcessing = true;
+            //paymentData.admissionId = $scope.info.admissionId;
+            //paymentData.patientId = $scope.info.id;
+
             ipdService.duePayment(paymentData).then(function (response) {
                 swal('Successful', 'Successfully    Payment', 'success');
                 $state.reload();
-                reportCreate.IpdEquipmentRequision(response.data);
+                reportCreate.IPDPaymentReceive(response.data);
             }, function (error) {
                 $scope.initButton();
-                toastr.error(error.data);
+                toastr.error(error.data.message);
             })
         } else {
             toastr.error('Please input valid Data');
